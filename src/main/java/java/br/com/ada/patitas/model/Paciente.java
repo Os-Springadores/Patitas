@@ -1,4 +1,4 @@
-package java.br.com.ada.patitas.clinicaveterinaria.model;
+package java.br.com.ada.patitas.model;
 
 
 import jakarta.persistence.Entity;
