@@ -1,4 +1,4 @@
-package br.com.ada.patitas.clinicaveterinaria;
+package br.com.ada.patitas;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
