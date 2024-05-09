@@ -1,4 +1,4 @@
-package java.br.com.ada.patitas.clinicaveterinaria.model;
+package br.com.ada.patitas.model;
 
 
 import jakarta.persistence.*;
@@ -13,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "db_veterinario")
 public class Veterinario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
