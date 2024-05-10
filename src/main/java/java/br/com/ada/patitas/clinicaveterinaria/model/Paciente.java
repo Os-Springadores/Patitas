@@ -1,8 +1,9 @@
 package java.br.com.ada.patitas.clinicaveterinaria.model;
 
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,11 +11,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name="paciente")
+@Builder
 public class Paciente {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nome;
-    private String especie;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Especie especie;
     private String raca;
     private int idade;
-    private int tipo;
+    private double peso;
 }

@@ -1,7 +1,5 @@
 package java.br.com.ada.patitas.clinicaveterinaria.service;
 
-import java.br.com.ada.patitas.clinicaveterinaria.model.Consulta;
-import java.br.com.ada.patitas.clinicaveterinaria.model.Veterinario;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
