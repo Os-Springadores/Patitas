@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "db_paciente")
+@Table(name = "tb_paciente")
 public class Paciente {
 
     private String nome;

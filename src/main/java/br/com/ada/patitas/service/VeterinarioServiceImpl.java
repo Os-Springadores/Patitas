@@ -7,6 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.ada.patitas.model.Veterinario;
 import br.com.ada.patitas.repository.VeterinarioRepository;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;

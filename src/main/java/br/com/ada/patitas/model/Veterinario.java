@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "db_veterinario")
+@Table(name = "tb_veterinario")
 public class Veterinario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
