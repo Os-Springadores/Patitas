@@ -1,16 +1,13 @@
 package br.com.ada.patitas.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import br.com.ada.patitas.model.Veterinario;
 import br.com.ada.patitas.repository.VeterinarioRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class VeterinarioServiceImpl implements VeterinarioService {
@@ -36,15 +33,14 @@ public class VeterinarioServiceImpl implements VeterinarioService {
     }
 
     @Override
-    public void atualizarVeterinario(Long id, Veterinario veterinario) {
-        if (veterinarioRepository.existsById(id)) {
-            veterinario.setId(id);
-            veterinarioRepository.save(veterinario);
+    public Optional<Veterinario> atualizarVeterinario(Long id, Veterinario veterinarioAtualizado) {
+        Optional<Veterinario> veterinarioExistente = veterinarioRepository.findById(id);
+        if (veterinarioExistente.isPresent()) {
+            veterinarioAtualizado.setId(id);
+            return Optional.of(veterinarioRepository.save(veterinarioAtualizado));
         } else {
-            throw new ResponseStatusException(HttpStatusCode.valueOf(id.byteValue()));
+            return Optional.empty();
         }
-
-
     }
 
     @Override

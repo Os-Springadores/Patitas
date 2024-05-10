@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("consulta/veterinarios")
+@RequestMapping("consulta/veterinario")
 public class VeterinarioController {
     @Autowired
     private VeterinarioService veterinarioService;

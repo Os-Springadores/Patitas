@@ -10,5 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface VeterinarioRepository extends JpaRepository<Veterinario, Long> {
-        Optional<Veterinario> horariosDisponiveis(Long id);
+        Optional<Veterinario> findById(Long id);
 }
