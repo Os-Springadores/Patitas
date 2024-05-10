@@ -6,8 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import br.com.ada.patitas.model.Veterinario;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface VeterinarioRepository extends JpaRepository<Veterinario, Long> {
-        List<Veterinario>horariosDisponiveis(Long id);
+        Optional<Veterinario> horariosDisponiveis(Long id);
 }

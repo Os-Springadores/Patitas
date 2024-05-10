@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -22,8 +23,6 @@ public class Veterinario {
     private Especialidade especialidade;
 
     @ElementCollection
-    @CollectionTable(name = "horarios_disponiveis",joinColumns = @JoinColumn(name = "veterinario_id"))
-    @Column(name = "horario")
-    private Set<String> horariosDisponiveis;
+    private List<String> horariosDisponiveis;
 
 }

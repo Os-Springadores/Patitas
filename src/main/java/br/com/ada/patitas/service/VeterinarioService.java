@@ -18,5 +18,5 @@ public interface VeterinarioService {
 
     void deletarVeterinario(Long id);
 
-    Set<String> buscarConsultasPorVeterinario(Long id);
+    List<String> buscarConsultasPorVeterinario(Long id);
 }

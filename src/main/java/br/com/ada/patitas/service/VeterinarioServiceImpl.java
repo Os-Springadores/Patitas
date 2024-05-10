@@ -53,7 +53,7 @@ public class VeterinarioServiceImpl implements VeterinarioService {
     }
 
     @Override
-    public Set<String> buscarConsultasPorVeterinario(Long id) {
+    public List<String> buscarConsultasPorVeterinario(Long id) {
         Optional<Veterinario> veterinarioOptional = veterinarioRepository.findById(id);
         if (veterinarioOptional.isPresent()) {
             Veterinario veterinario = veterinarioOptional.get();
