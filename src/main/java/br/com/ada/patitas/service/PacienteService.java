@@ -6,6 +6,7 @@ import java.util.Optional;
 
 
 public interface PacienteService {
+
     List<Paciente> findAll();
 
     Optional<Paciente> findById(final Long id);
@@ -18,3 +19,4 @@ public interface PacienteService {
 
 
 }
+

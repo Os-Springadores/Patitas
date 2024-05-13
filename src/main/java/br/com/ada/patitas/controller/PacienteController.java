@@ -1,5 +1,4 @@
 package br.com.ada.patitas.controller;
-
 import br.com.ada.patitas.dto.PacienteDto;
 import br.com.ada.patitas.model.Paciente;
 import br.com.ada.patitas.service.PacienteService;
@@ -27,6 +26,7 @@ public class PacienteController {
     private PacienteService pacienteService;
 
     @GetMapping
+
     public ResponseEntity<List<PacienteDto>> findAll(){
 List<Paciente> pacientes=pacienteService.findAll();
         return ResponseEntity.ok(toDtoPaciente(pacientes));
@@ -58,5 +58,6 @@ List<Paciente> pacientes=pacienteService.findAll();
     public ResponseEntity<Void> deletar(@PathVariable("id") final Long id) throws Exception {
         pacienteService.deletar(id);
         return ResponseEntity.noContent().build();
+
     }
 }
