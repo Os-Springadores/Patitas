@@ -1,7 +1,8 @@
-package br.com.ada.patitas.service;
+package br.com.ada.patitas.serviceimpl;
 
 import br.com.ada.patitas.model.Paciente;
 import br.com.ada.patitas.repository.PacienteRepository;
+import br.com.ada.patitas.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

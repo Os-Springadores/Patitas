@@ -23,9 +23,10 @@ public class Veterinario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "O Atributo nome é obrigatório")
+    @Column(name = "nome")
     private String nome;
-    @NotBlank(message = "O Atributo peso e obrigatório")
+
     private Especialidade especialidade;
 
     @ElementCollection
