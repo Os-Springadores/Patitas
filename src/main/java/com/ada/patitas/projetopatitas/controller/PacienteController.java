@@ -1,8 +1,8 @@
-package br.com.ada.patitas.controller;
+package com.ada.patitas.projetopatitas.controller;
 
 
-import br.com.ada.patitas.model.Paciente;
-import br.com.ada.patitas.service.PacienteService;
+import com.ada.patitas.projetopatitas.model.Paciente;
+import com.ada.patitas.projetopatitas.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

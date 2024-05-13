@@ -30,15 +30,16 @@ public class VeterinarioControllerTest {
         MockitoAnnotations.initMocks(this);
     }
 
+
     @Test
-    public void testCadastrarVeterinario() {
-        Veterinario veterinario = new Veterinario();
-        when(veterinarioService.cadastrarVeterinario(veterinario)).thenReturn(veterinario);
+    public void testBuscarTodosVeterinarios() {
+        List<Veterinario> veterinarios = new ArrayList<>();
+        when(veterinarioService.buscarTodosVeterinarios()).thenReturn(veterinarios);
 
-        ResponseEntity<Veterinario> response = veterinarioController.cadastrarVeterinario(veterinario);
+        ResponseEntity<List<Veterinario>> response = veterinarioController.buscarTodosVeterinarios();
 
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(veterinario, response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(veterinarios, response.getBody());
     }
 
     @Test
@@ -54,14 +55,14 @@ public class VeterinarioControllerTest {
     }
 
     @Test
-    public void testBuscarTodosVeterinarios() {
-        List<Veterinario> veterinarios = new ArrayList<>();
-        when(veterinarioService.buscarTodosVeterinarios()).thenReturn(veterinarios);
+    public void testCadastrarVeterinario() {
+        Veterinario veterinario = new Veterinario();
+        when(veterinarioService.cadastrarVeterinario(veterinario)).thenReturn(veterinario);
 
-        ResponseEntity<List<Veterinario>> response = veterinarioController.buscarTodosVeterinarios();
+        ResponseEntity<Veterinario> response = veterinarioController.cadastrarVeterinario(veterinario);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(veterinarios, response.getBody());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(veterinario, response.getBody());
     }
 
     @Test
@@ -69,7 +70,7 @@ public class VeterinarioControllerTest {
         Long id = 1L;
         Veterinario veterinario = new Veterinario();
         veterinario.setId(id);
-        doNothing().when(veterinarioService).atualizarVeterinario(id, veterinario);
+        when(veterinarioService.buscarVeterinarioPorId(id)).thenReturn(Optional.of(veterinario));
 
         ResponseEntity<Void> response = veterinarioController.atualizarVeterinario(id, veterinario);
 

@@ -1,33 +1,28 @@
-package br.com.ada.patitas.model;
+package com.ada.patitas.projetopatitas.dto;
 
 
-import jakarta.persistence.*;
+import com.ada.patitas.projetopatitas.model.EspeciePaciente;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name = "tb_paciente")
 @Builder
-public class Paciente {
+@AllArgsConstructor
+@NoArgsConstructor
+public class PacienteDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID",nullable = false)
     private Long id;
 
     @NotBlank(message = "O Atributo nome é obrigatório")
-    @Column(name = "nome",length = 50,nullable = false)
     private String nome;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
+    @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private EspeciePaciente especie;
 
     @NotBlank(message = "O Atributo raça é obrigatório")

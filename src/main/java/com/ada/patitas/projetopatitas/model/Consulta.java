@@ -1,4 +1,4 @@
-package br.com.ada.patitas.model;
+package com.ada.patitas.projetopatitas.model;
 
 
 import jakarta.persistence.*;

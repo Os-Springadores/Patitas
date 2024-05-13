@@ -1,4 +1,4 @@
-package br.com.ada.patitas.model;
+package com.ada.patitas.projetopatitas.model;
 
 
 import jakarta.persistence.*;
@@ -8,15 +8,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
-@Table(name = "tb_veterinario")
-public class Veterinario {
+@Table(name = "tb_paciente")
+@Builder
+public class Paciente {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID",nullable = false)
@@ -26,9 +26,15 @@ public class Veterinario {
     @Column(name = "nome",length = 50,nullable = false)
     private String nome;
 
-    private Especialidade especialidade;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private EspeciePaciente especie;
 
-    @ElementCollection
-    private List<String> horariosDisponiveis;
+    @NotBlank(message = "O Atributo raça é obrigatório")
+    private String raca;
 
+    private int idade;
+
+    @NotBlank(message = "O Atributo peso é obrigatório")
+    private double peso;
 }

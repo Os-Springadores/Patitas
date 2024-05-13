@@ -1,12 +1,12 @@
-package br.com.ada.patitas.serviceimpl;
+package com.ada.patitas.projetopatitas.serviceimpl;
 
-import br.com.ada.patitas.service.VeterinarioService;
+
+import com.ada.patitas.projetopatitas.model.Veterinario;
+import com.ada.patitas.projetopatitas.repository.VeterinarioRepository;
+import com.ada.patitas.projetopatitas.service.VeterinarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import br.com.ada.patitas.model.Veterinario;
-import br.com.ada.patitas.repository.VeterinarioRepository;
 
 import java.util.List;
 import java.util.Optional;

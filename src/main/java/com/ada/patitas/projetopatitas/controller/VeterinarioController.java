@@ -1,15 +1,14 @@
-package br.com.ada.patitas.controller;
+package com.ada.patitas.projetopatitas.controller;
 
 
-import br.com.ada.patitas.service.VeterinarioService;
+import com.ada.patitas.projetopatitas.model.Veterinario;
+import com.ada.patitas.projetopatitas.service.VeterinarioService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import br.com.ada.patitas.model.Veterinario;
 
 import java.util.List;
 import java.util.Optional;
