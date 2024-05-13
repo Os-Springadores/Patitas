@@ -1,9 +1,7 @@
 package br.com.ada.patitas.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import br.com.ada.patitas.model.Paciente;
 import br.com.ada.patitas.repository.PacienteRepository;
 import java.util.List;
@@ -11,29 +9,26 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class PacienteServiceImpl implements PacienteService{
+public class PacienteServiceImpl implements PacienteService {
 
-
-    private PacienteRepository pacienteRepository;
+    private final PacienteRepository pacienteRepository;
 
     @Override
     public List<Paciente> findAll() {
-
         return pacienteRepository.findAll();
     }
 
     @Override
     public Optional<Paciente> findById(Long id) {
-
         return pacienteRepository.findById(id);
     }
 
     @Override
     public Paciente cadastrar(final Paciente entity) throws Exception {
-if(entity.getId()==null || pacienteRepository.findById(entity.getId()).isEmpty()){
-    return pacienteRepository.save(entity);
+        if (entity.getId() == null || pacienteRepository.findById(entity.getId()).isEmpty()) {
+            return pacienteRepository.save(entity);
         }
-        throw new Exception("O paciente com id "+entity.getId() + " já existe");
+        throw new Exception("O paciente com id " + entity.getId() + " já existe");
     }
 
     @Override
@@ -48,7 +43,7 @@ if(entity.getId()==null || pacienteRepository.findById(entity.getId()).isEmpty()
             pacienteEncontrado.setPeso(pacienteAtualizado.getPeso());
             return Optional.of(pacienteRepository.save(pacienteEncontrado));
         }
-            return pacienteExistente;
+        return pacienteExistente;
     }
 
     @Override

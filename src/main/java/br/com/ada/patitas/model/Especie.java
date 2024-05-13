@@ -1,2 +1,3 @@
-package br.com.ada.patitas.model;public enum Especie {
+package br.com.ada.patitas.model;
+public enum Especie {
 }

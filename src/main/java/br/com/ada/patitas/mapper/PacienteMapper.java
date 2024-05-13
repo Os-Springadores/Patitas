@@ -18,7 +18,6 @@ public class PacienteMapper {
     public static PacienteDto toDtoPaciente(final Paciente entity) {
         if (Objects.nonNull(entity)) {
             return PacienteDto.builder()
-                    .id(entity.getId())
                     .nome(entity.getNome())
                     .especie(entity.getEspecie())
                     .raca(entity.getRaca())
@@ -32,7 +31,6 @@ public class PacienteMapper {
 
     public static Paciente toEntityPaciente(final PacienteDto dto) {
         return Paciente.builder()
-                .id(dto.getId())
                 .nome(dto.getNome())
                 .especie(dto.getEspecie())
                 .raca(dto.getRaca())
