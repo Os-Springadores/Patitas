@@ -1,12 +1,13 @@
 package br.com.ada.patitas.model;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.persistence.*;
 
-@Table(name="paciente")
+
+@Table(name="tb_paciente")
 @Builder
 @Data
 @NoArgsConstructor

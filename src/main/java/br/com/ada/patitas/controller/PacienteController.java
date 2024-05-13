@@ -2,7 +2,7 @@ package br.com.ada.patitas.controller;
 import br.com.ada.patitas.dto.PacienteDto;
 import br.com.ada.patitas.model.Paciente;
 import br.com.ada.patitas.service.PacienteService;
-
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+
 
 import static br.com.ada.patitas.mapper.PacienteMapper.toDtoPaciente;
 import static br.com.ada.patitas.mapper.PacienteMapper.toEntityPaciente;
