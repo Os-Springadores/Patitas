@@ -8,11 +8,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+
 @Table(name = "tb_paciente")
 @Builder
 public class Paciente {
@@ -37,4 +43,5 @@ public class Paciente {
 
     @NotBlank(message = "O Atributo peso é obrigatório")
     private double peso;
+
 }

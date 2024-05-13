@@ -1,6 +1,7 @@
 package br.com.ada.patitas.model;
 
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,5 +32,4 @@ public class Consulta {
 
     @Temporal(TemporalType.TIME)
     private Date hora;
-
 }
