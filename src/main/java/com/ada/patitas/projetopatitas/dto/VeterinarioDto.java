@@ -1,9 +1,12 @@
-package br.com.ada.patitas.model;
+package com.ada.patitas.projetopatitas.dto;
 
 
-import jakarta.persistence.*;
 
+import com.ada.patitas.projetopatitas.model.Especialidade;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.ElementCollection;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,31 +14,20 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.Set;
-
-
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Builder
-@Entity
-@Table(name = "tb_veterinario")
-public class Veterinario {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID",nullable = false)
+public class VeterinarioDto {
+
     private Long id;
 
     @NotBlank(message = "O Atributo nome é obrigatório")
-    @Column(name = "nome",length = 50,nullable = false)
     private String nome;
 
+    @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Especialidade especialidade;
 
     @ElementCollection

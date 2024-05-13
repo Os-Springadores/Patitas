@@ -1,5 +1,4 @@
-package br.com.ada.patitas.model;
-
+package com.ada.patitas.projetopatitas.model;
 
 
 import jakarta.persistence.*;
@@ -32,4 +31,5 @@ public class Consulta {
 
     @Temporal(TemporalType.TIME)
     private Date hora;
+
 }
