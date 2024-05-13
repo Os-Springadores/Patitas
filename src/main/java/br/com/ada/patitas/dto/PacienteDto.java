@@ -1,14 +1,14 @@
 package br.com.ada.patitas.dto;
 
-import br.com.ada.patitas.model.EspeciePaciente;
+
+import br.com.ada.patitas.model.Especie;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
@@ -16,20 +16,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PacienteDto {
 
-    private Long id;
 
-    @NotBlank(message = "O Atributo nome é obrigatório")
     private String nome;
 
     @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING)
+
+    private Especie especie;
+
     private EspeciePaciente especie;
 
-    @NotBlank(message = "O Atributo raça é obrigatório")
     private String raca;
 
     private int idade;
 
-    @NotBlank(message = "O Atributo peso é obrigatório")
     private double peso;
 }

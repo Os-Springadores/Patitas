@@ -6,15 +6,16 @@ import java.util.Optional;
 
 
 public interface PacienteService {
-    List<Paciente> buscarTodos();
 
-    Optional<Paciente> buscarPorId(final Long id);
+    List<Paciente> findAll();
 
-    Paciente cadastrar(final Paciente paciente);
+    Optional<Paciente> findById(final Long id);
+
+    Paciente cadastrar(final Paciente paciente) throws Exception;
 
     Optional<Paciente> atualizar(final Long id, final Paciente pacienteAtualizado);
 
-    void deletar(final Long id);
+    void deletar(final Long id) throws Exception;
 
 
 }
