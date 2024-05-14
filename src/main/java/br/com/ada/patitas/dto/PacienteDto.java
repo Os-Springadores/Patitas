@@ -21,7 +21,6 @@ public class PacienteDto {
 
     @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-
     private Especie especie;
 
     private String raca;

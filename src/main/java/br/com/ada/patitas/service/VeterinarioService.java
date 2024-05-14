@@ -2,31 +2,23 @@ package br.com.ada.patitas.service;
 
 
 import br.com.ada.patitas.model.Veterinario;
+
 import java.util.List;
 import java.util.Optional;
-
-import br.com.ada.patitas.model.Consulta;
-import br.com.ada.patitas.model.Veterinario;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
 
 public interface VeterinarioService {
 
-
     List<Veterinario> buscarTodosVeterinarios();
 
-    Optional<Veterinario> buscarVeterinarioPorId(Long id);
+    Optional<Veterinario> buscarVeterinarioPorId(final Long id);
 
-    Veterinario cadastrarVeterinario(Veterinario veterinario)throws Exception;
+    Veterinario cadastrarVeterinario(final Veterinario veterinario) throws Exception;
+
+    Optional<Veterinario> atualizarVeterinario(final Long id, final Veterinario veterinario);
+
+    void deletarVeterinario(final Long id) throws Exception;
+
+    List<String> buscarConsultasPorVeterinario(final Long id);
 
 
-    Optional<Veterinario> atualizarVeterinario(Long id, Veterinario veterinario);
-
-    void deletarVeterinario(Long id);
-
-    List<String> buscarConsultasPorVeterinario(Long id);
-
- 
 }

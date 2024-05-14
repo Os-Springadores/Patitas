@@ -31,24 +31,35 @@ public class VeterinarioServiceImpl implements VeterinarioService {
     }
 
     @Override
-    public Veterinario cadastrarVeterinario(Veterinario veterinario) {
-        return veterinarioRepository.save(veterinario);
+    public Veterinario cadastrarVeterinario(Veterinario veterinario) throws Exception {
+        if (veterinario.getId() == null || veterinarioRepository.findById(veterinario.getId()).isEmpty()) {
+            return veterinarioRepository.save(veterinario);
+        }
+        throw new Exception("O veterinario com id " + veterinario.getId() + "já existe");
     }
 
+
     @Override
-    public Optional<Veterinario> atualizarVeterinario(Long id, Veterinario veterinarioAtualizado) {
+    public Optional<Veterinario> atualizarVeterinario(final Long id, final Veterinario veterinarioAtualizado) {
         Optional<Veterinario> veterinarioExistente = veterinarioRepository.findById(id);
         if (veterinarioExistente.isPresent()) {
-            veterinarioAtualizado.setId(id);
+            final Veterinario veterinarioEncontrado = veterinarioExistente.get();
+            veterinarioEncontrado.setNome(veterinarioAtualizado.getNome());
+            veterinarioEncontrado.setEspecialidade(veterinarioAtualizado.getEspecialidade());
+            veterinarioEncontrado.setHorariosDisponiveis(veterinarioAtualizado.getHorariosDisponiveis());
             return Optional.of(veterinarioRepository.save(veterinarioAtualizado));
-        } else {
-            return Optional.empty();
         }
+        return veterinarioExistente;
     }
 
+
     @Override
-    public void deletarVeterinario(Long id) {
-        veterinarioRepository.deleteById(id);
+    public void deletarVeterinario(Long id) throws Exception {
+        Optional<Veterinario> veterinarioOptional = veterinarioRepository.findById(id);
+        if (veterinarioOptional.isEmpty()) {
+            throw new Exception("O veterinario com id " + id + "não existe!");
+        }
+        veterinarioRepository.delete(veterinarioOptional.get());
     }
 
     @Override

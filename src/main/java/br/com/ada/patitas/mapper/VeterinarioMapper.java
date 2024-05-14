@@ -1,5 +1,6 @@
 package br.com.ada.patitas.mapper;
 
+
 import br.com.ada.patitas.dto.VeterinarioDto;
 import br.com.ada.patitas.model.Veterinario;
 
@@ -8,14 +9,14 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class VeterinarioMapper {
-    public static List<VeterinarioDto> toDto(final List<Veterinario> entities) {
+    public static List<VeterinarioDto> toDtoVeterinario(final List<Veterinario> entities) {
 
         return entities.stream()
-                .map(entity -> toDto(entity))
+                .map(VeterinarioMapper::toDtoVeterinarioDto)
                 .collect(Collectors.toList());
     }
 
-    public static VeterinarioDto toDto(final Veterinario entity) {
+    public static VeterinarioDto toDtoVeterinarioDto(final Veterinario entity) {
         if (Objects.nonNull(entity)) {
             return VeterinarioDto.builder()
                     .nome(entity.getNome())
@@ -27,7 +28,7 @@ public class VeterinarioMapper {
         }
     }
 
-    public static Veterinario toEntity(final VeterinarioDto dto) {
+    public static Veterinario toEntityVeterinario(final VeterinarioDto dto) {
         return Veterinario.builder()
                 .nome(dto.getNome())
                 .especialidade(dto.getEspecialidade())

@@ -27,10 +27,10 @@ public class PacienteServiceImpl implements PacienteService {
 
     @Override
     public Paciente cadastrar(final Paciente entity) throws Exception {
-        if(entity.getId()==null || pacienteRepository.findById(entity.getId()).isEmpty()){
+        if (entity.getId() == null || pacienteRepository.findById(entity.getId()).isEmpty()) {
             return pacienteRepository.save(entity);
         }
-throw new Exception("O paciente com id "+ entity.getId()+" já existe");
+        throw new Exception("O paciente com id " + entity.getId() + " já existe");
     }
 
     @Override
@@ -48,6 +48,7 @@ throw new Exception("O paciente com id "+ entity.getId()+" já existe");
         return pacienteExistente;
     }
 
+    @Override
     public void deletar(Long id) throws Exception {
         Optional<Paciente> entity = pacienteRepository.findById(id);
 

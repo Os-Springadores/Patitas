@@ -51,7 +51,8 @@ public class PacienteController {
     @PutMapping("/{id}")
     public ResponseEntity<PacienteDto> atualizar(@PathVariable("id") final Long id, @Valid @RequestBody final PacienteDto pacienteAtualizado) {
         final Optional<Paciente> optionalPaciente = pacienteService.atualizar(id, toEntityPaciente(pacienteAtualizado));
-        if (optionalPaciente.isEmpty()) return ResponseEntity.notFound().build();
+        if (optionalPaciente.isEmpty())
+            return ResponseEntity.notFound().build();
         return ResponseEntity.ok(pacienteAtualizado);
     }
 

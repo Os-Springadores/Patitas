@@ -18,24 +18,23 @@ import lombok.NoArgsConstructor;
 import java.util.Set;
 
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Builder
 @Entity
 @Table(name = "tb_veterinario")
 public class Veterinario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID",nullable = false)
     private Long id;
 
     @NotBlank(message = "O Atributo nome é obrigatório")
-    @Column(name = "nome",length = 50,nullable = false)
     private String nome;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Especialidade especialidade;
 
     @ElementCollection

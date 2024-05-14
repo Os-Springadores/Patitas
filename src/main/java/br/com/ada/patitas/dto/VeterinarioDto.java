@@ -21,7 +21,6 @@ import java.util.List;
 @Builder
 public class VeterinarioDto {
 
-    private Long id;
 
     @NotBlank(message = "O Atributo nome é obrigatório")
     private String nome;
