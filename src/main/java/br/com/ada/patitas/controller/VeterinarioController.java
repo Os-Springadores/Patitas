@@ -38,7 +38,7 @@ public class VeterinarioController {
 
 
     @PostMapping
-    public ResponseEntity<Veterinario> cadastrarVeterinario(@RequestBody Veterinario veterinario) {
+    public ResponseEntity<Veterinario> cadastrarVeterinario(@RequestBody Veterinario veterinario) throws Exception{
         Veterinario novo = veterinarioService.cadastrarVeterinario(veterinario);
         return new ResponseEntity<>(novo, HttpStatus.CREATED);
     }

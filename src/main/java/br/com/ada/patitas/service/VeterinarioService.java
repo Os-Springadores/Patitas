@@ -19,7 +19,7 @@ public interface VeterinarioService {
 
     Optional<Veterinario> buscarVeterinarioPorId(Long id);
 
-    Veterinario cadastrarVeterinario(Veterinario veterinario);
+    Veterinario cadastrarVeterinario(Veterinario veterinario)throws Exception;
 
 
     Optional<Veterinario> atualizarVeterinario(Long id, Veterinario veterinario);

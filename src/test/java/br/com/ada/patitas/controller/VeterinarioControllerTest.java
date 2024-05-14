@@ -55,7 +55,7 @@ public class VeterinarioControllerTest {
     }
 
     @Test
-    public void testCadastrarVeterinario() {
+    public void testCadastrarVeterinario() throws Exception{
         Veterinario veterinario = new Veterinario();
         when(veterinarioService.cadastrarVeterinario(veterinario)).thenReturn(veterinario);
 

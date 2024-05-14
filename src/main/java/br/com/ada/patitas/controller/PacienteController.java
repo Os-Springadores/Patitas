@@ -1,4 +1,5 @@
 package br.com.ada.patitas.controller;
+
 import br.com.ada.patitas.dto.PacienteDto;
 import br.com.ada.patitas.model.Paciente;
 import br.com.ada.patitas.service.PacienteService;
@@ -27,18 +28,18 @@ public class PacienteController {
 
     @GetMapping
 
-    public ResponseEntity<List<PacienteDto>> findAll(){
-List<Paciente> pacientes=pacienteService.findAll();
+    public ResponseEntity<List<PacienteDto>> findAll() {
+        List<Paciente> pacientes = pacienteService.findAll();
         return ResponseEntity.ok(toDtoPaciente(pacientes));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PacienteDto> findById(@PathVariable("id") final Long id){
-       final Optional<Paciente> optionalPaciente=pacienteService.findById(id);
-       if(optionalPaciente.isEmpty()){
-           return ResponseEntity.notFound().build();
-       }
-       return ResponseEntity.ok(toDtoPaciente(optionalPaciente.get()));
+    public ResponseEntity<PacienteDto> findById(@PathVariable("id") final Long id) {
+        final Optional<Paciente> optionalPaciente = pacienteService.findById(id);
+        if (optionalPaciente.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(toDtoPaciente(optionalPaciente.get()));
     }
 
     @PostMapping
@@ -48,9 +49,9 @@ List<Paciente> pacientes=pacienteService.findAll();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PacienteDto> atualizar(@PathVariable("id") final Long id,@Valid @RequestBody final PacienteDto pacienteAtualizado){
-        final Optional<Paciente> optionalPaciente=pacienteService.atualizar(id, toEntityPaciente(pacienteAtualizado));
-       if (optionalPaciente.isEmpty()) return ResponseEntity.notFound().build();
+    public ResponseEntity<PacienteDto> atualizar(@PathVariable("id") final Long id, @Valid @RequestBody final PacienteDto pacienteAtualizado) {
+        final Optional<Paciente> optionalPaciente = pacienteService.atualizar(id, toEntityPaciente(pacienteAtualizado));
+        if (optionalPaciente.isEmpty()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(pacienteAtualizado);
     }
 
