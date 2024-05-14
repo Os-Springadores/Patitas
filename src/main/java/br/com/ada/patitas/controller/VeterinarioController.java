@@ -52,7 +52,7 @@ public class VeterinarioController {
 
 
     @PostMapping
-    public ResponseEntity<?> cadastrarVeterinario(@Valid @RequestBody VeterinarioDto veterinarioDto) throws Exception {
+    public ResponseEntity<Veterinario> cadastrarVeterinario(@Valid @RequestBody VeterinarioDto veterinarioDto) throws Exception {
         veterinarioService.cadastrarVeterinario(toEntityVeterinario(veterinarioDto));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

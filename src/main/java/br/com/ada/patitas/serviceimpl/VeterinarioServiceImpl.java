@@ -57,7 +57,7 @@ public class VeterinarioServiceImpl implements VeterinarioService {
     public void deletarVeterinario(Long id) throws Exception {
         Optional<Veterinario> veterinarioOptional = veterinarioRepository.findById(id);
         if (veterinarioOptional.isEmpty()) {
-            throw new Exception("O veterinario com id " + id + "não existe!");
+            throw new Exception("O veterinario com id " + id + " não existe!");
         }
         veterinarioRepository.delete(veterinarioOptional.get());
     }
