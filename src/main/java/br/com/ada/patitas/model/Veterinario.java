@@ -37,7 +37,7 @@ public class Veterinario {
     @Enumerated(EnumType.STRING)
     private Especialidade especialidade;
 
-    @ElementCollection
+
     private List<String> horariosDisponiveis;
 
 }

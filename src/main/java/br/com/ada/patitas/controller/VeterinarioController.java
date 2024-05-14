@@ -29,8 +29,8 @@ public class VeterinarioController {
 
 
     @GetMapping
-    public ResponseEntity<List<VeterinarioDto>> buscarTodosVeterinarios() {
-        List<Veterinario> veterinarios = veterinarioService.buscarTodosVeterinarios();
+    public ResponseEntity<List<VeterinarioDto>> findAll() {
+        List<Veterinario> veterinarios = veterinarioService.findAll();
         return ResponseEntity.ok(toDtoVeterinario(veterinarios));
     }
 
@@ -42,8 +42,8 @@ public class VeterinarioController {
 //    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<VeterinarioDto> buscarVeterinarioPorId(@PathVariable("id") final Long id) {
-        final Optional<Veterinario> veterinarioOptional = veterinarioService.buscarVeterinarioPorId(id);
+    public ResponseEntity<VeterinarioDto> findById(@PathVariable("id") final Long id) {
+        final Optional<Veterinario> veterinarioOptional = veterinarioService.findById(id);
         if (veterinarioOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -52,23 +52,24 @@ public class VeterinarioController {
 
 
     @PostMapping
-    public ResponseEntity<Veterinario> cadastrarVeterinario(@Valid @RequestBody VeterinarioDto veterinarioDto) throws Exception {
-        veterinarioService.cadastrarVeterinario(toEntityVeterinario(veterinarioDto));
+    public ResponseEntity<Veterinario> save(@Valid @RequestBody VeterinarioDto veterinarioDto) throws Exception {
+        veterinarioService.save(toEntityVeterinario(veterinarioDto));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<VeterinarioDto> atualizarVeterinario(@PathVariable("id") final Long id, @Valid @RequestBody final VeterinarioDto veterinarioDto) {
-        final Optional<Veterinario> veterinarioOptional = veterinarioService.atualizarVeterinario(id, toEntityVeterinario(veterinarioDto));
-        if (veterinarioOptional.isEmpty())
+    public ResponseEntity<VeterinarioDto> update(@PathVariable("id") final Long id, @Valid @RequestBody final VeterinarioDto veterinarioDto) {
+        final Optional<Veterinario> veterinarioOptional = veterinarioService.update(id, toEntityVeterinario(veterinarioDto));
+        if (veterinarioOptional.isEmpty()) {
 
             return ResponseEntity.notFound().build();
+
+        }
         return ResponseEntity.ok(veterinarioDto);
     }
-
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarVeterinario(@PathVariable("id") Long id) throws Exception {
-        veterinarioService.deletarVeterinario(id);
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) throws Exception {
+        veterinarioService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

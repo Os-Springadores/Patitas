@@ -1,6 +1,8 @@
 package br.com.ada.patitas.service;
 
 import br.com.ada.patitas.model.Paciente;
+
+
 import java.util.List;
 import java.util.Optional;
 
@@ -11,11 +13,11 @@ public interface PacienteService {
 
     Optional<Paciente> findById(final Long id);
 
-    Paciente cadastrar(final Paciente paciente) throws Exception;
+    Paciente save(final Paciente paciente) throws Exception;
 
-    Optional<Paciente> atualizar(final Long id, final Paciente pacienteAtualizado);
+    Optional<Paciente> update(final Long id, final Paciente pacienteAtualizado);
 
-    void deletar(final Long id) throws Exception;
+    void delete(final Long id) throws Exception;
 
 
 }

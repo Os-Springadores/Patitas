@@ -1,5 +1,6 @@
 package br.com.ada.patitas.serviceimpl;
 
+import br.com.ada.patitas.exception.VeterinarioJaExisteException;
 import br.com.ada.patitas.service.VeterinarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,26 +22,26 @@ public class VeterinarioServiceImpl implements VeterinarioService {
 
 
     @Override
-    public List<Veterinario> buscarTodosVeterinarios() {
+    public List<Veterinario> findAll() {
         return veterinarioRepository.findAll();
     }
 
     @Override
-    public Optional<Veterinario> buscarVeterinarioPorId(Long id) {
+    public Optional<Veterinario> findById(Long id) {
         return veterinarioRepository.findById(id);
     }
 
     @Override
-    public Veterinario cadastrarVeterinario(Veterinario veterinario) throws Exception {
+    public Veterinario save(Veterinario veterinario)  {
         if (veterinario.getId() == null || veterinarioRepository.findById(veterinario.getId()).isEmpty()) {
             return veterinarioRepository.save(veterinario);
         }
-        throw new Exception("O veterinario com id " + veterinario.getId() + "já existe");
+        throw new VeterinarioJaExisteException("O veterinario com id " + veterinario.getId() + "já existe");
     }
 
 
     @Override
-    public Optional<Veterinario> atualizarVeterinario(final Long id, final Veterinario veterinarioAtualizado) {
+    public Optional<Veterinario> update(final Long id, final Veterinario veterinarioAtualizado) {
         Optional<Veterinario> veterinarioExistente = veterinarioRepository.findById(id);
         if (veterinarioExistente.isPresent()) {
             final Veterinario veterinarioEncontrado = veterinarioExistente.get();
@@ -54,10 +55,10 @@ public class VeterinarioServiceImpl implements VeterinarioService {
 
 
     @Override
-    public void deletarVeterinario(Long id) throws Exception {
+    public void delete(Long id) {
         Optional<Veterinario> veterinarioOptional = veterinarioRepository.findById(id);
         if (veterinarioOptional.isEmpty()) {
-            throw new Exception("O veterinario com id " + id + " não existe!");
+            throw new VeterinarioJaExisteException("O veterinario com id " + id + " não existe!");
         }
         veterinarioRepository.delete(veterinarioOptional.get());
     }

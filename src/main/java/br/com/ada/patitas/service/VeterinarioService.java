@@ -6,17 +6,18 @@ import br.com.ada.patitas.model.Veterinario;
 import java.util.List;
 import java.util.Optional;
 
+
 public interface VeterinarioService {
 
-    List<Veterinario> buscarTodosVeterinarios();
+    List<Veterinario> findAll();
 
-    Optional<Veterinario> buscarVeterinarioPorId(final Long id);
+    Optional<Veterinario> findById(final Long id);
 
-    Veterinario cadastrarVeterinario(final Veterinario veterinario) throws Exception;
+    Veterinario save(final Veterinario veterinario) throws Exception;
 
-    Optional<Veterinario> atualizarVeterinario(final Long id, final Veterinario veterinario);
+    Optional<Veterinario> update(final Long id, final Veterinario veterinario);
 
-    void deletarVeterinario(final Long id) throws Exception;
+    void delete(final Long id) throws Exception;
 
     List<String> buscarConsultasPorVeterinario(final Long id);
 

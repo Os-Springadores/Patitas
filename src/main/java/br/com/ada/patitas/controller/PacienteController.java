@@ -43,22 +43,22 @@ public class PacienteController {
     }
 
     @PostMapping
-    public ResponseEntity<?> cadastrar(@Valid @RequestBody final PacienteDto pacienteDto) throws Exception {
-        pacienteService.cadastrar(toEntityPaciente(pacienteDto));
+    public ResponseEntity<?> save(@Valid @RequestBody final PacienteDto pacienteDto) throws Exception {
+        pacienteService.save(toEntityPaciente(pacienteDto));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PacienteDto> atualizar(@PathVariable("id") final Long id, @Valid @RequestBody final PacienteDto pacienteAtualizado) {
-        final Optional<Paciente> optionalPaciente = pacienteService.atualizar(id, toEntityPaciente(pacienteAtualizado));
+    public ResponseEntity<PacienteDto> update(@PathVariable("id") final Long id, @Valid @RequestBody final PacienteDto pacienteAtualizado) {
+        final Optional<Paciente> optionalPaciente = pacienteService.update(id, toEntityPaciente(pacienteAtualizado));
         if (optionalPaciente.isEmpty())
             return ResponseEntity.notFound().build();
         return ResponseEntity.ok(pacienteAtualizado);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable("id") final Long id) throws Exception {
-        pacienteService.deletar(id);
+    public ResponseEntity<Void> delete(@PathVariable("id") final Long id) throws Exception {
+        pacienteService.delete(id);
         return ResponseEntity.noContent().build();
 
     }

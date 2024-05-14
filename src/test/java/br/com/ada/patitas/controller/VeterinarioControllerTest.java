@@ -65,7 +65,7 @@ public class VeterinarioControllerTest {
 
         List<Veterinario> veterinarios = new ArrayList<>();
         String veterinariosJson = mapper.writeValueAsString(toDtoVeterinario(veterinarios));
-        when(veterinarioService.buscarTodosVeterinarios()).thenReturn(veterinarios);
+        when(veterinarioService.findAll()).thenReturn(veterinarios);
 
         mockMvc.perform(get("/veterinario"))
                 .andExpect(status().isOk())
@@ -83,7 +83,7 @@ public class VeterinarioControllerTest {
     public void testBuscarVeterinarioPorId() throws Exception {
         Veterinario veterinario = new Veterinario();
         String veterinarioJson = mapper.writeValueAsString(toDtoVeterinarioDto(veterinario));
-        when(veterinarioService.buscarVeterinarioPorId(veterinario.getId())).thenReturn(Optional.of(veterinario));
+        when(veterinarioService.findById(veterinario.getId())).thenReturn(Optional.of(veterinario));
 
         mockMvc.perform(get("/cliente/1"))
                 .andExpect(status().isOk())
@@ -96,7 +96,7 @@ public class VeterinarioControllerTest {
     @Test
     public void testCadastrarVeterinario() throws Exception {
         Veterinario veterinario = new Veterinario();
-        when(veterinarioService.cadastrarVeterinario(veterinario)).thenReturn(veterinario);
+        when(veterinarioService.save(veterinario)).thenReturn(veterinario);
 
         // ResponseEntity<Veterinario> response = veterinarioController.cadastrarVeterinario(veterinario);
 
@@ -142,6 +142,6 @@ public class VeterinarioControllerTest {
     public void testDeletarVeterinario() throws Exception {
         mockMvc.perform(delete("/veterinario/1"))
                 .andExpect(status().isNoContent());
-        verify(veterinarioService).deletarVeterinario(1l);
+        verify(veterinarioService).delete(1l);
     }
 }
