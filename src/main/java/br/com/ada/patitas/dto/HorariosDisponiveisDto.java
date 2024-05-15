@@ -1,26 +1,24 @@
 package br.com.ada.patitas.dto;
 
-import br.com.ada.patitas.model.HorariosDisponiveis;
-import br.com.ada.patitas.model.Paciente;
 import br.com.ada.patitas.model.Veterinario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConsultaDto {
-
-    private Veterinario veterinario;
-
-    private Paciente paciente;
-
-    private HorariosDisponiveis horariosDisponiveis;
+public class HorariosDisponiveisDto {
 
 
+    private Veterinario idVeterinario;
+
+
+    private LocalDateTime horariosDisponiveis;
+
+    private boolean status;
 }

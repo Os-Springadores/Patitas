@@ -12,8 +12,9 @@ public class VeterinarioMapper {
     public static List<VeterinarioDto> toDtoVeterinario(final List<Veterinario> entities) {
 
         return entities.stream()
-                .map(VeterinarioMapper::toDtoVeterinarioDto)
+                .map(entity -> toDtoVeterinarioDto(entity))
                 .collect(Collectors.toList());
+
     }
 
     public static VeterinarioDto toDtoVeterinarioDto(final Veterinario entity) {
@@ -21,7 +22,6 @@ public class VeterinarioMapper {
             return VeterinarioDto.builder()
                     .nome(entity.getNome())
                     .especialidade(entity.getEspecialidade())
-                    .horariosDisponiveis(entity.getHorariosDisponiveis())
                     .build();
         } else {
             return VeterinarioDto.builder().build();
@@ -32,7 +32,6 @@ public class VeterinarioMapper {
         return Veterinario.builder()
                 .nome(dto.getNome())
                 .especialidade(dto.getEspecialidade())
-                .horariosDisponiveis(dto.getHorariosDisponiveis())
                 .build();
     }
 

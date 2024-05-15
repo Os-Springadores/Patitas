@@ -19,7 +19,6 @@ public interface VeterinarioService {
 
     void delete(final Long id) throws Exception;
 
-    List<String> buscarConsultasPorVeterinario(final Long id);
 
 
 }

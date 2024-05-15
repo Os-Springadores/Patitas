@@ -20,8 +20,7 @@ public class ConsultaMapper {
             return ConsultaDto.builder()
                     .veterinario(consulta.getVeterinario())
                     .paciente(consulta.getPaciente())
-                    .data(consulta.getData())
-                    .hora(consulta.getHora())
+                    .horariosDisponiveis(consulta.getHorariosDisponiveis())
                     .build();
         }
         return ConsultaDto.builder().build();
@@ -32,8 +31,7 @@ public class ConsultaMapper {
         return Consulta.builder()
                 .veterinario(consultaDto.getVeterinario())
                 .paciente(consultaDto.getPaciente())
-                .data(consultaDto.getData())
-                .hora(consultaDto.getHora())
+                .horariosDisponiveis(consultaDto.getHorariosDisponiveis())
                 .build();
     }
 }

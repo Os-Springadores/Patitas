@@ -27,7 +27,6 @@ public class PacienteController {
     private PacienteService pacienteService;
 
     @GetMapping
-
     public ResponseEntity<List<PacienteDto>> findAll() {
         List<Paciente> pacientes = pacienteService.findAll();
         return ResponseEntity.ok(toDtoPaciente(pacientes));

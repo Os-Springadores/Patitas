@@ -47,7 +47,6 @@ public class VeterinarioServiceImpl implements VeterinarioService {
             final Veterinario veterinarioEncontrado = veterinarioExistente.get();
             veterinarioEncontrado.setNome(veterinarioAtualizado.getNome());
             veterinarioEncontrado.setEspecialidade(veterinarioAtualizado.getEspecialidade());
-            veterinarioEncontrado.setHorariosDisponiveis(veterinarioAtualizado.getHorariosDisponiveis());
             return Optional.of(veterinarioRepository.save(veterinarioAtualizado));
         }
         return veterinarioExistente;
@@ -63,13 +62,4 @@ public class VeterinarioServiceImpl implements VeterinarioService {
         veterinarioRepository.delete(veterinarioOptional.get());
     }
 
-    @Override
-    public List<String> buscarConsultasPorVeterinario(Long id) {
-        Optional<Veterinario> veterinarioOptional = veterinarioRepository.findById(id);
-        if (veterinarioOptional.isPresent()) {
-            Veterinario veterinario = veterinarioOptional.get();
-            return veterinario.getHorariosDisponiveis();
-        }
-        return null;
-    }
 }

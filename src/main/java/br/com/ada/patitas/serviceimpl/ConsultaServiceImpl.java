@@ -41,8 +41,6 @@ public class ConsultaServiceImpl implements ConsultaService {
             final Consulta consultaEncontrada = consultaOptional.get();
             consultaEncontrada.setVeterinario(consultaAtualizado.getVeterinario());
             consultaEncontrada.setPaciente(consultaAtualizado.getPaciente());
-            consultaEncontrada.setData(consultaAtualizado.getData());
-            consultaEncontrada.setHora(consultaAtualizado.getHora());
             consultaRepository.save(consultaEncontrada);
             return Optional.of(consultaAtualizado);
         }

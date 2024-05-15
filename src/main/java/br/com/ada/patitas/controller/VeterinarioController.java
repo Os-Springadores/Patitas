@@ -34,12 +34,6 @@ public class VeterinarioController {
         return ResponseEntity.ok(toDtoVeterinario(veterinarios));
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<String>> buscarConsultasPorVeterinario(@PathVariable("id") final Long id) {
-//        Optional<Veterinario> veterinarios = veterinarioService.buscarConsultasPorVeterinario(id);
-//        return ResponseEntity.ok(toDtoVeterinario(veterinarios));
-//
-//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<VeterinarioDto> findById(@PathVariable("id") final Long id) {
@@ -51,7 +45,7 @@ public class VeterinarioController {
     }
 
 
-    @PostMapping
+    @PostMapping("/cadastrar")
     public ResponseEntity<Veterinario> save(@Valid @RequestBody VeterinarioDto veterinarioDto) throws Exception {
         veterinarioService.save(toEntityVeterinario(veterinarioDto));
         return ResponseEntity.status(HttpStatus.CREATED).build();
