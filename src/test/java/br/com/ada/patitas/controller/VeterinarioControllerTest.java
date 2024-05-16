@@ -45,32 +45,31 @@ public class VeterinarioControllerTest {
 
     @Test
     public void testFindAll() throws Exception {
-        // Given
+
         List<Veterinario> veterinarios = new ArrayList<>();
         when(veterinarioService.findAll()).thenReturn(veterinarios);
 
-        // When & Then
         mockMvc.perform(get("/veterinario"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testFindById() throws Exception {
-        // Given
+   
         Veterinario veterinario = new Veterinario();
         when(veterinarioService.findById(anyLong())).thenReturn(Optional.of(veterinario));
 
-        // When & Then
+       
         mockMvc.perform(get("/veterinario/1"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testSave() throws Exception {
-        // Given
+ 
         VeterinarioDto veterinarioDto = new VeterinarioDto();
 
-        // When & Then
+       
         mockMvc.perform(post("/veterinario")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{}"))
@@ -79,10 +78,10 @@ public class VeterinarioControllerTest {
 
     @Test
     public void testUpdate() throws Exception {
-        // Given
+  
         VeterinarioDto veterinarioDto = new VeterinarioDto();
 
-        // When & Then
+        
         mockMvc.perform(put("/veterinario/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{}"))
@@ -91,7 +90,7 @@ public class VeterinarioControllerTest {
 
     @Test
     public void testDelete() throws Exception {
-        // When & Then
+      
         mockMvc.perform(delete("/veterinario/1"))
                 .andExpect(status().isNoContent());
     }
