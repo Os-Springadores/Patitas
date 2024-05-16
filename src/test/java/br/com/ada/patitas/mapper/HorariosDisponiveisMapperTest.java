@@ -11,17 +11,16 @@ public class HorariosDisponiveisMapperTest {
 
     @Test
     public void testToDtoHorariosDisponiveis() {
-        // Given
+       
         HorariosDisponiveis horarios1 = new HorariosDisponiveis(1L, "10:00", true);
         HorariosDisponiveis horarios2 = new HorariosDisponiveis(2L, "14:00", false);
         List<HorariosDisponiveis> horariosDisponiveis = new ArrayList<>();
         horariosDisponiveis.add(horarios1);
         horariosDisponiveis.add(horarios2);
 
-        // When
+
         List<HorariosDisponiveisDto> horariosDto = HorariosDisponiveisMapper.toDtoHorariosDisponiveis(horariosDisponiveis);
 
-        // Then
         assertEquals(2, horariosDto.size());
         assertEquals(1L, horariosDto.get(0).getIdVeterinario());
         assertEquals("10:00", horariosDto.get(0).getHorariosDisponiveis());
@@ -33,13 +32,13 @@ public class HorariosDisponiveisMapperTest {
 
     @Test
     public void testToDtoHorariosDisponiveisDto() {
-        // Given
+  
         HorariosDisponiveis horarios = new HorariosDisponiveis(1L, "10:00", true);
 
-        // When
+   
         HorariosDisponiveisDto horariosDto = HorariosDisponiveisMapper.toDtoHorariosDisponiveis(horarios);
 
-        // Then
+    
         assertNotNull(horariosDto);
         assertEquals(1L, horariosDto.getIdVeterinario());
         assertEquals("10:00", horariosDto.getHorariosDisponiveis());
@@ -48,13 +47,13 @@ public class HorariosDisponiveisMapperTest {
 
     @Test
     public void testToEntityHorariosDisponiveis() {
-        // Given
+   
         HorariosDisponiveisDto horariosDto = new HorariosDisponiveisDto(1L, "10:00", true);
 
-        // When
+   
         HorariosDisponiveis horarios = HorariosDisponiveisMapper.toEntityHorariosDisponiveis(horariosDto);
 
-        // Then
+       
         assertNotNull(horarios);
         assertEquals(1L, horarios.getIdVeterinario());
         assertEquals("10:00", horarios.getHorariosDisponiveis());
