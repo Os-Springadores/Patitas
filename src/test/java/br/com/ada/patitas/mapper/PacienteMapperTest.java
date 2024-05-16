@@ -11,17 +11,16 @@ public class PacienteMapperTest {
 
     @Test
     public void testToDtoPaciente() {
-        // Given
+       
         Paciente paciente1 = new Paciente("Rex", "Cachorro", "Golden Retriever", 5, 25.5);
         Paciente paciente2 = new Paciente("Mimi", "Gato", "Persa", 3, 3.8);
         List<Paciente> pacientes = new ArrayList<>();
         pacientes.add(paciente1);
         pacientes.add(paciente2);
 
-        // When
+    
         List<PacienteDto> pacienteDtos = PacienteMapper.toDtoPaciente(pacientes);
 
-        // Then
         assertEquals(2, pacienteDtos.size());
         assertEquals("Rex", pacienteDtos.get(0).getNome());
         assertEquals("Cachorro", pacienteDtos.get(0).getEspecie());
@@ -37,13 +36,13 @@ public class PacienteMapperTest {
 
     @Test
     public void testToDtoPacienteDto() {
-        // Given
+
         Paciente paciente = new Paciente("Rex", "Cachorro", "Golden Retriever", 5, 25.5);
 
-        // When
+      
         PacienteDto pacienteDto = PacienteMapper.toDtoPaciente(paciente);
 
-        // Then
+    
         assertNotNull(pacienteDto);
         assertEquals("Rex", pacienteDto.getNome());
         assertEquals("Cachorro", pacienteDto.getEspecie());
@@ -54,13 +53,12 @@ public class PacienteMapperTest {
 
     @Test
     public void testToEntityPaciente() {
-        // Given
+
         PacienteDto pacienteDto = new PacienteDto("Rex", "Cachorro", "Golden Retriever", 5, 25.5);
 
-        // When
         Paciente paciente = PacienteMapper.toEntityPaciente(pacienteDto);
 
-        // Then
+ 
         assertNotNull(paciente);
         assertEquals("Rex", paciente.getNome());
         assertEquals("Cachorro", paciente.getEspecie());
