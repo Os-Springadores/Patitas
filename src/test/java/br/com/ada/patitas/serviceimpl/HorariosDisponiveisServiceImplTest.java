@@ -33,38 +33,37 @@ public class HorariosDisponiveisServiceImplTest {
 
     @Test
     public void testFindAll() {
-        // Given
+
         List<HorariosDisponiveis> horariosDisponiveis = new ArrayList<>();
         when(horariosDisponiveisRepository.findAll()).thenReturn(horariosDisponiveis);
 
-        // When
+
         List<HorariosDisponiveis> result = horariosDisponiveisService.findAll();
 
-        // Then
         assertEquals(horariosDisponiveis, result);
     }
 
     @Test
     public void testSave() {
-        // Given
+      
         HorariosDisponiveis horariosDisponiveis = new HorariosDisponiveis();
         when(horariosDisponiveisRepository.save(horariosDisponiveis)).thenReturn(horariosDisponiveis);
 
-        // When
+ 
         HorariosDisponiveis result = horariosDisponiveisService.save(horariosDisponiveis);
 
-        // Then
+  
         assertEquals(horariosDisponiveis, result);
     }
 
     @Test
     public void testSaveWithExistingId() {
-        // Given
+   
         HorariosDisponiveis horariosDisponiveis = new HorariosDisponiveis();
         horariosDisponiveis.setId(1L);
         when(horariosDisponiveisRepository.findById(1L)).thenReturn(Optional.of(horariosDisponiveis));
 
-        // When & Then
+       
         assertThrows(ConsultaJaExisteException.class, () -> horariosDisponiveisService.save(horariosDisponiveis));
     }
 }
