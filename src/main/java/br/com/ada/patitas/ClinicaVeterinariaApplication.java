@@ -13,3 +13,5 @@ public class ClinicaVeterinariaApplication {
 }
 
 
+java.lang.Long não pode ser convertido para br.com.ada.patitas.model.Veterinario
+java: tipos incompatíveis: br.com.ada.patitas.model.Veterinario não pode ser convertido para java.lang.Long
