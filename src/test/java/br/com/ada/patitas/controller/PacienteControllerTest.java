@@ -44,32 +44,32 @@ public class PacienteControllerTest {
 
     @Test
     public void testFindAll() throws Exception {
-        // Given
+     
         List<Paciente> pacientes = new ArrayList<>();
         when(pacienteService.findAll()).thenReturn(pacientes);
 
-        // When & Then
+     
         mockMvc.perform(get("/paciente"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testFindById() throws Exception {
-        // Given
+     
         Paciente paciente = new Paciente();
         when(pacienteService.findById(anyLong())).thenReturn(Optional.of(paciente));
 
-        // When & Then
+       
         mockMvc.perform(get("/paciente/1"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testSave() throws Exception {
-        // Given
+    
         PacienteDto pacienteDto = new PacienteDto();
 
-        // When & Then
+    
         mockMvc.perform(post("/paciente")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{}"))
@@ -78,10 +78,10 @@ public class PacienteControllerTest {
 
     @Test
     public void testUpdate() throws Exception {
-        // Given
+       
         PacienteDto pacienteDto = new PacienteDto();
 
-        // When & Then
+       
         mockMvc.perform(put("/paciente/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{}"))
@@ -90,7 +90,7 @@ public class PacienteControllerTest {
 
     @Test
     public void testDelete() throws Exception {
-        // When & Then
+        
         mockMvc.perform(delete("/paciente/1"))
                 .andExpect(status().isNoContent());
     }
