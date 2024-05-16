@@ -44,21 +44,21 @@ public class HorariosDisponiveisControllerTest {
 
     @Test
     public void testFindAll() throws Exception {
-        // Given
+        
         List<HorariosDisponiveis> horariosDisponiveis = new ArrayList<>();
         when(horariosDisponiveisService.findAll()).thenReturn(horariosDisponiveis);
 
-        // When & Then
+        
         mockMvc.perform(get("/horariosDisponiveis"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testSave() throws Exception {
-        // Given
+     
         HorariosDisponiveisDto horariosDisponiveisDto = new HorariosDisponiveisDto();
 
-        // When & Then
+    
         mockMvc.perform(post("/horariosDisponiveis")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{}"))
