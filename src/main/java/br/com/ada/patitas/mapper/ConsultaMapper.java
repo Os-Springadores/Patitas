@@ -11,7 +11,7 @@ public class ConsultaMapper {
 
     public static List<ConsultaDto> toDtoConsulta(final List<Consulta> consultas) {
         return consultas.stream()
-                .map(ConsultaMapper::toDtoConsultaDto)
+                .map(entity ->toDtoConsultaDto(entity))
                 .collect(Collectors.toList());
     }
 
