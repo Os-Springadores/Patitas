@@ -11,4 +11,5 @@ public class ClinicaVeterinariaApplication {
 	}
 
 }
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Could not determine recommended JdbcType for Java type 'br.com.ada.patitas.model.Veterinario'
 
