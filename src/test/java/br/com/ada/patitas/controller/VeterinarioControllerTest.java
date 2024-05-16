@@ -21,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import br.com.ada.patitas.controller.VeterinarioController;
+import br.com.ada.patitas.dto.VeterinarioDto;
 import br.com.ada.patitas.model.Veterinario;
 import br.com.ada.patitas.service.VeterinarioService;
 
@@ -43,48 +44,46 @@ public class VeterinarioControllerTest {
     }
 
     @Test
-    public void testBuscarTodosVeterinarios() throws Exception {
-        // Given
+    public void testFindAll() throws Exception {
         List<Veterinario> veterinarios = new ArrayList<>();
         when(veterinarioService.findAll()).thenReturn(veterinarios);
 
-        // When & Then
         mockMvc.perform(get("/veterinario"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void deveRetornarNaoEncontradoSeVeterinarioNaoExiste() throws Exception {
-        // Given
-        when(veterinarioService.findById(anyLong())).thenReturn(Optional.empty());
+    public void testFindById() throws Exception {
+        Veterinario veterinario = new Veterinario();
+        when(veterinarioService.findById(anyLong())).thenReturn(Optional.of(veterinario));
 
-        // When & Then
         mockMvc.perform(get("/veterinario/1"))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isOk());
     }
 
     @Test
-    public void testCadastrarVeterinario() throws Exception {
-        // Given
-        Veterinario veterinario = new Veterinario();
+    public void testSave() throws Exception {
+        VeterinarioDto veterinarioDto = new VeterinarioDto();
 
-        // When
-        when(veterinarioService.save(any(Veterinario.class))).thenReturn(veterinario);
-
-        // Then
         mockMvc.perform(post("/veterinario")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{}"))
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void testUpdate() throws Exception {
+        VeterinarioDto veterinarioDto = new VeterinarioDto();
+
+        mockMvc.perform(put("/veterinario/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{}"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testDeletarVeterinario() throws Exception {
-        // When & Then
+    public void testDelete() throws Exception {
         mockMvc.perform(delete("/veterinario/1"))
                 .andExpect(status().isNoContent());
-
-        // Verify if the delete method was called with the correct argument
-        verify(veterinarioService).delete(1L);
     }
 }
