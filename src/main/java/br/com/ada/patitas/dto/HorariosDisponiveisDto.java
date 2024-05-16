@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class HorariosDisponiveisDto {
 
 
-    private Veterinario idVeterinario;
+    private Long idVeterinario;
 
 
     private LocalDateTime horariosDisponiveis;

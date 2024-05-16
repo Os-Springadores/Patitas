@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class VeterinarioDto {
 
+
     @NotBlank(message = "O Atributo nome é obrigatório")
     private String nome;
 

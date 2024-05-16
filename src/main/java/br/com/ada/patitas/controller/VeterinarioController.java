@@ -45,7 +45,7 @@ public class VeterinarioController {
     }
 
 
-    @PostMapping("/cadastrar")
+    @PostMapping()
     public ResponseEntity<Veterinario> save(@Valid @RequestBody VeterinarioDto veterinarioDto) throws Exception {
         veterinarioService.save(toEntityVeterinario(veterinarioDto));
         return ResponseEntity.status(HttpStatus.CREATED).build();

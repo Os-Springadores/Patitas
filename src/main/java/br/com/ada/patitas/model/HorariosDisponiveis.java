@@ -21,8 +21,8 @@ public class HorariosDisponiveis {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "veterinario_id")
-    private Veterinario idVeterinario;
+    @Column(name = "veterinario_id")
+    private Long idVeterinario;
 
     private LocalDateTime horariosDisponiveis;
 

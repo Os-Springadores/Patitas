@@ -18,20 +18,20 @@ public class ConsultaMapper {
     public static ConsultaDto toDtoConsultaDto(final Consulta consulta) {
         if (Objects.nonNull(consulta)) {
             return ConsultaDto.builder()
-                    .veterinario(consulta.getVeterinario())
-                    .paciente(consulta.getPaciente())
-                    .horariosDisponiveis(consulta.getHorariosDisponiveis())
+                    .idVeterinario(consulta.getIdVeterinario())
+                    .idPaciente(consulta.getIdPaciente())
+                    .idHorariosDisponiveis(consulta.getIdHorariosDisponiveis())
                     .build();
         }
-        return ConsultaDto.builder().build();
+        return null;
     }
 
 
     public static Consulta toEntityConsulta(final ConsultaDto consultaDto){
         return Consulta.builder()
-                .veterinario(consultaDto.getVeterinario())
-                .paciente(consultaDto.getPaciente())
-                .horariosDisponiveis(consultaDto.getHorariosDisponiveis())
+                .idVeterinario(consultaDto.getIdVeterinario())
+                .idPaciente(consultaDto.getIdPaciente())
+                .idHorariosDisponiveis(consultaDto.getIdHorariosDisponiveis())
                 .build();
     }
 }

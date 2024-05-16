@@ -14,23 +14,22 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ConsultaServiceImpl implements ConsultaService {
 
-    private ConsultaRepository consultaRepository;
+    private final ConsultaRepository consultaRepository;
 
     @Override
     public List<Consulta> findAll() {
+
         return consultaRepository.findAll();
     }
 
     @Override
     public Optional<Consulta> findById(Long id) {
+
         return consultaRepository.findById(id);
     }
 
     @Override
     public Consulta save(Consulta consulta) {
-        if (consultaRepository.findById(consulta.getId()).isPresent()) {
-            throw new ConsultaJaExisteException("A consulta com id " + consulta.getId() + "já existe!");
-        }
         return consultaRepository.save(consulta);
     }
 
@@ -39,8 +38,9 @@ public class ConsultaServiceImpl implements ConsultaService {
         final Optional<Consulta> consultaOptional = consultaRepository.findById(id);
         if (consultaOptional.isPresent()) {
             final Consulta consultaEncontrada = consultaOptional.get();
-            consultaEncontrada.setVeterinario(consultaAtualizado.getVeterinario());
-            consultaEncontrada.setPaciente(consultaAtualizado.getPaciente());
+            consultaEncontrada.setIdVeterinario(consultaAtualizado.getIdVeterinario());
+            consultaEncontrada.setIdPaciente(consultaAtualizado.getIdPaciente());
+            consultaEncontrada.setIdHorariosDisponiveis(consultaAtualizado.getIdHorariosDisponiveis());
             consultaRepository.save(consultaEncontrada);
             return Optional.of(consultaAtualizado);
         }

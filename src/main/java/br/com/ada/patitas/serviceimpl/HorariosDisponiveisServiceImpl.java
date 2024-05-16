@@ -21,9 +21,10 @@ public class HorariosDisponiveisServiceImpl implements HorariosDisponiveisServic
 
     @Override
     public HorariosDisponiveis save(HorariosDisponiveis horariosDisponiveis) {
-        if (horariosDisponiveisRepository.findById(horariosDisponiveis.getId()).isPresent()) {
-           // throw new ConsultaJaExisteException("A consulta com id " + horariosDisponiveis.getId() + "já existe!");
+        if (horariosDisponiveis.getId() != null && horariosDisponiveisRepository.findById(horariosDisponiveis.getId()).isPresent()) {
+            throw new ConsultaJaExisteException("A consulta com id " + horariosDisponiveis.getId() + " já existe!");
         }
         return horariosDisponiveisRepository.save(horariosDisponiveis);
     }
+
 }

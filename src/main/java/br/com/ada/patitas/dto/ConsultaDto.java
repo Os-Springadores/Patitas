@@ -16,11 +16,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ConsultaDto {
 
-    private Veterinario veterinario;
+    private Long idVeterinario;
 
-    private Paciente paciente;
+    private Long idPaciente;
 
-    private HorariosDisponiveis horariosDisponiveis;
+    private Long idHorariosDisponiveis;
 
 
 }

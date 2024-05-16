@@ -2,6 +2,7 @@ package br.com.ada.patitas.mapper;
 
 import br.com.ada.patitas.dto.HorariosDisponiveisDto;
 import br.com.ada.patitas.model.HorariosDisponiveis;
+import br.com.ada.patitas.model.Veterinario;
 
 
 import java.util.List;

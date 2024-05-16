@@ -8,9 +8,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Patitas" />
-        <module name="clinica-veterinaria" />
+        <module name="projetopatitas" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="clinica-veterinaria" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
