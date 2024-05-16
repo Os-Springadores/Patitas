@@ -34,15 +34,15 @@ public class ConsultaControllerTest {
 
     @Test
     public void testFindAll() {
-        // Given
+       
         Consulta consulta1 = new Consulta();
         Consulta consulta2 = new Consulta();
         List<Consulta> consultas = Arrays.asList(consulta1, consulta2);
 
-        // When
+       
         when(consultaService.findAll()).thenReturn(consultas);
 
-        // Then
+    
         ResponseEntity<List<ConsultaDto>> response = consultaController.findAll();
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(2, response.getBody().size());
@@ -50,14 +50,14 @@ public class ConsultaControllerTest {
 
     @Test
     public void testFindById() {
-        // Given
+   
         Consulta consulta = new Consulta();
         consulta.setId(1L);
 
-        // When
+    
         when(consultaService.findById(anyLong())).thenReturn(Optional.of(consulta));
 
-        // Then
+   
         ResponseEntity<ConsultaDto> response = consultaController.findById(1L);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(1L, response.getBody().getId());
@@ -65,10 +65,10 @@ public class ConsultaControllerTest {
 
     @Test
     public void testSave() {
-        // Given
+       
         ConsultaDto consultaDto = new ConsultaDto();
 
-        // Then
+      
         ResponseEntity<Consulta> response = consultaController.save(consultaDto);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         verify(consultaService, times(1)).save(any());
@@ -76,14 +76,13 @@ public class ConsultaControllerTest {
 
     @Test
     public void testUpdate() {
-        // Given
+    
         ConsultaDto consultaDto = new ConsultaDto();
         consultaDto.setId(1L);
 
-        // When
+ 
         when(consultaService.update(anyLong(), any())).thenReturn(Optional.of(new Consulta()));
 
-        // Then
         ResponseEntity<ConsultaDto> response = consultaController.update(1L, consultaDto);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(1L, response.getBody().getId());
@@ -91,7 +90,7 @@ public class ConsultaControllerTest {
 
     @Test
     public void testDelete() throws Exception {
-        // Then
+
         ResponseEntity<Void> response = consultaController.delete(1L);
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         verify(consultaService, times(1)).delete(anyLong());
