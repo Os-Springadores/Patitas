@@ -1,20 +1,63 @@
 package br.com.ada.patitas.mapper;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import br.com.ada.patitas.dto.HorariosDisponiveisDto;
+import br.com.ada.patitas.model.HorariosDisponiveis;
+import java.util.ArrayList;
+import java.util.List;
 
-class HorariosDisponiveisMapperTest {
+public class HorariosDisponiveisMapperTest {
 
     @Test
-    void toDtoHorariosDisponiveis() {
+    public void testToDtoHorariosDisponiveis() {
+        // Given
+        HorariosDisponiveis horarios1 = new HorariosDisponiveis(1L, "10:00", true);
+        HorariosDisponiveis horarios2 = new HorariosDisponiveis(2L, "14:00", false);
+        List<HorariosDisponiveis> horariosDisponiveis = new ArrayList<>();
+        horariosDisponiveis.add(horarios1);
+        horariosDisponiveis.add(horarios2);
+
+        // When
+        List<HorariosDisponiveisDto> horariosDto = HorariosDisponiveisMapper.toDtoHorariosDisponiveis(horariosDisponiveis);
+
+        // Then
+        assertEquals(2, horariosDto.size());
+        assertEquals(1L, horariosDto.get(0).getIdVeterinario());
+        assertEquals("10:00", horariosDto.get(0).getHorariosDisponiveis());
+        assertTrue(horariosDto.get(0).isStatus());
+        assertEquals(2L, horariosDto.get(1).getIdVeterinario());
+        assertEquals("14:00", horariosDto.get(1).getHorariosDisponiveis());
+        assertFalse(horariosDto.get(1).isStatus());
     }
 
     @Test
-    void testToDtoHorariosDisponiveis() {
+    public void testToDtoHorariosDisponiveisDto() {
+        // Given
+        HorariosDisponiveis horarios = new HorariosDisponiveis(1L, "10:00", true);
+
+        // When
+        HorariosDisponiveisDto horariosDto = HorariosDisponiveisMapper.toDtoHorariosDisponiveis(horarios);
+
+        // Then
+        assertNotNull(horariosDto);
+        assertEquals(1L, horariosDto.getIdVeterinario());
+        assertEquals("10:00", horariosDto.getHorariosDisponiveis());
+        assertTrue(horariosDto.isStatus());
     }
 
     @Test
-    void toEntityHorariosDisponiveis() {
+    public void testToEntityHorariosDisponiveis() {
+        // Given
+        HorariosDisponiveisDto horariosDto = new HorariosDisponiveisDto(1L, "10:00", true);
+
+        // When
+        HorariosDisponiveis horarios = HorariosDisponiveisMapper.toEntityHorariosDisponiveis(horariosDto);
+
+        // Then
+        assertNotNull(horarios);
+        assertEquals(1L, horarios.getIdVeterinario());
+        assertEquals("10:00", horarios.getHorariosDisponiveis());
+        assertTrue(horarios.isStatus());
     }
 }
