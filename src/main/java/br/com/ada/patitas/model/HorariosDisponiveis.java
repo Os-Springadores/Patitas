@@ -22,7 +22,7 @@ public class HorariosDisponiveis {
     private Long id;
 
     @JoinColumn(name = "veterinario_id")
-    private Veterinario idVeterinario;
+    private Long idVeterinario;
 
     private LocalDateTime horariosDisponiveis;
 

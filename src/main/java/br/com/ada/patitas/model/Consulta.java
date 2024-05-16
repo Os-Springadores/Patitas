@@ -24,8 +24,7 @@ public class Consulta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
+    
     @ManyToOne
     @JoinColumn(name = "veterinario_id")
     private Veterinario veterinario;
