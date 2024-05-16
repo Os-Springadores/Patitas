@@ -33,48 +33,48 @@ public class ConsultaServiceImplTest {
 
     @Test
     public void testFindAll() {
-        // Given
+    
         List<Consulta> consultas = new ArrayList<>();
         when(consultaRepository.findAll()).thenReturn(consultas);
 
-        // When
+ 
         List<Consulta> result = consultaService.findAll();
 
-        // Then
+       
         assertEquals(consultas, result);
     }
 
     @Test
     public void testFindById() {
-        // Given
+ 
         Consulta consulta = new Consulta();
         consulta.setId(1L);
         when(consultaRepository.findById(1L)).thenReturn(Optional.of(consulta));
 
-        // When
+    
         Optional<Consulta> result = consultaService.findById(1L);
 
-        // Then
+   
         assertTrue(result.isPresent());
         assertEquals(consulta, result.get());
     }
 
     @Test
     public void testSave() {
-        // Given
+
         Consulta consulta = new Consulta();
         when(consultaRepository.save(consulta)).thenReturn(consulta);
 
-        // When
+    
         Consulta result = consultaService.save(consulta);
 
-        // Then
+
         assertEquals(consulta, result);
     }
 
     @Test
     public void testUpdate() {
-        // Given
+   
         Consulta consulta = new Consulta();
         consulta.setId(1L);
         Consulta consultaAtualizado = new Consulta();
@@ -84,10 +84,10 @@ public class ConsultaServiceImplTest {
         when(consultaRepository.findById(1L)).thenReturn(Optional.of(consulta));
         when(consultaRepository.save(consulta)).thenReturn(consulta);
 
-        // When
+      
         Optional<Consulta> result = consultaService.update(1L, consultaAtualizado);
 
-        // Then
+    
         assertTrue(result.isPresent());
         assertEquals(consultaAtualizado.getIdVeterinario(), result.get().getIdVeterinario());
         assertEquals(consultaAtualizado.getIdPaciente(), result.get().getIdPaciente());
@@ -96,15 +96,14 @@ public class ConsultaServiceImplTest {
 
     @Test
     public void testDelete() {
-        // Given
+     
         Consulta consulta = new Consulta();
         consulta.setId(1L);
         when(consultaRepository.findById(1L)).thenReturn(Optional.of(consulta));
 
-        // When
         consultaService.delete(1L);
 
-        // Then
+    
         verify(consultaRepository).delete(consulta);
     }
 }
