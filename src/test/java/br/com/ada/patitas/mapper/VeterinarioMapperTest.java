@@ -11,17 +11,17 @@ public class VeterinarioMapperTest {
 
     @Test
     public void testToDtoVeterinario() {
-        // Given
+
         Veterinario veterinario1 = new Veterinario("Dr. Carlos", "Cardiologia");
         Veterinario veterinario2 = new Veterinario("Dra. Maria", "Dermatologia");
         List<Veterinario> veterinarios = new ArrayList<>();
         veterinarios.add(veterinario1);
         veterinarios.add(veterinario2);
 
-        // When
+
         List<VeterinarioDto> veterinarioDtos = VeterinarioMapper.toDtoVeterinario(veterinarios);
 
-        // Then
+  
         assertEquals(2, veterinarioDtos.size());
         assertEquals("Dr. Carlos", veterinarioDtos.get(0).getNome());
         assertEquals("Cardiologia", veterinarioDtos.get(0).getEspecialidade());
@@ -31,13 +31,13 @@ public class VeterinarioMapperTest {
 
     @Test
     public void testToDtoVeterinarioDto() {
-        // Given
+
         Veterinario veterinario = new Veterinario("Dr. Carlos", "Cardiologia");
 
-        // When
+
         VeterinarioDto veterinarioDto = VeterinarioMapper.toDtoVeterinarioDto(veterinario);
 
-        // Then
+
         assertNotNull(veterinarioDto);
         assertEquals("Dr. Carlos", veterinarioDto.getNome());
         assertEquals("Cardiologia", veterinarioDto.getEspecialidade());
@@ -45,13 +45,12 @@ public class VeterinarioMapperTest {
 
     @Test
     public void testToEntityVeterinario() {
-        // Given
+   
         VeterinarioDto veterinarioDto = new VeterinarioDto("Dr. Carlos", "Cardiologia");
 
-        // When
         Veterinario veterinario = VeterinarioMapper.toEntityVeterinario(veterinarioDto);
 
-        // Then
+ 
         assertNotNull(veterinario);
         assertEquals("Dr. Carlos", veterinario.getNome());
         assertEquals("Cardiologia", veterinario.getEspecialidade());
