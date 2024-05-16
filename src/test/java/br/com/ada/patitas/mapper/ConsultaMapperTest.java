@@ -11,17 +11,14 @@ public class ConsultaMapperTest {
 
     @Test
     public void testToDtoConsulta() {
-        // Given
         Consulta consulta1 = new Consulta(1L, 1L, 1L);
         Consulta consulta2 = new Consulta(2L, 2L, 2L);
         List<Consulta> consultas = new ArrayList<>();
         consultas.add(consulta1);
         consultas.add(consulta2);
 
-        // When
         List<ConsultaDto> consultaDtos = ConsultaMapper.toDtoConsulta(consultas);
 
-        // Then
         assertEquals(2, consultaDtos.size());
         assertEquals(1L, consultaDtos.get(0).getIdVeterinario());
         assertEquals(1L, consultaDtos.get(0).getIdPaciente());
@@ -36,10 +33,8 @@ public class ConsultaMapperTest {
         // Given
         Consulta consulta = new Consulta(1L, 1L, 1L);
 
-        // When
         ConsultaDto consultaDto = ConsultaMapper.toDtoConsultaDto(consulta);
 
-        // Then
         assertNotNull(consultaDto);
         assertEquals(1L, consultaDto.getIdVeterinario());
         assertEquals(1L, consultaDto.getIdPaciente());
@@ -48,13 +43,10 @@ public class ConsultaMapperTest {
 
     @Test
     public void testToEntityConsulta() {
-        // Given
         ConsultaDto consultaDto = new ConsultaDto(1L, 1L, 1L);
 
-        // When
         Consulta consulta = ConsultaMapper.toEntityConsulta(consultaDto);
 
-        // Then
         assertNotNull(consulta);
         assertEquals(1L, consulta.getIdVeterinario());
         assertEquals(1L, consulta.getIdPaciente());
