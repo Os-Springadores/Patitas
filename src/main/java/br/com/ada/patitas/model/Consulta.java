@@ -35,4 +35,14 @@ public class Consulta {
     @Column(name = "horarios_disponiveis_id")
     private Long idHorariosDisponiveis;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "servico")
+    private Servico servico;
+
+    @Column(name = "tipo_servico")
+    private String tipoServico;
+
+    @Column(name = "preco")
+    private Double preco;
+
 }

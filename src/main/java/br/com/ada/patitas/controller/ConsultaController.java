@@ -3,8 +3,10 @@ package br.com.ada.patitas.controller;
 
 import br.com.ada.patitas.dto.ConsultaDto;
 import br.com.ada.patitas.model.Consulta;
+import br.com.ada.patitas.model.HorariosDisponiveis;
 import br.com.ada.patitas.model.Paciente;
 import br.com.ada.patitas.model.Veterinario;
+import br.com.ada.patitas.repository.HorariosDisponiveisRepository;
 import br.com.ada.patitas.repository.PacienteRepository;
 import br.com.ada.patitas.repository.VeterinarioRepository;
 import br.com.ada.patitas.service.ConsultaService;
@@ -35,6 +37,7 @@ public class ConsultaController {
 
     @Autowired
     private final ConsultaService consultaService;
+    private final HorariosDisponiveisRepository horariosDisponiveisRepository;
 
     @GetMapping
     public ResponseEntity<List<ConsultaDto>> findAll() {
@@ -54,8 +57,16 @@ public class ConsultaController {
 
     @PostMapping
     public ResponseEntity<Consulta> save(@Valid @RequestBody final ConsultaDto consultaDto) {
-        consultaService.save(toEntityConsulta(consultaDto));
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+
+        HorariosDisponiveis horario = horariosDisponiveisRepository.findById(consultaDto.getIdHorariosDisponiveis()).orElse(null);
+
+        if (horario == null || !horario.isStatus()) {
+        return ResponseEntity.badRequest().build();
+        }
+        Consulta consultaDisponivel=consultaService.save(toEntityConsulta(consultaDto));
+    horario.setStatus(false);
+    horariosDisponiveisRepository.save(horario);
+    return ResponseEntity.status(HttpStatus.CREATED).body(consultaDisponivel);
     }
 
     @PutMapping("/{id}")

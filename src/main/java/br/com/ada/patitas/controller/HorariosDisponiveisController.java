@@ -35,6 +35,7 @@ public class HorariosDisponiveisController {
     @PostMapping
     public ResponseEntity<HorariosDisponiveis>save(@Valid @RequestBody HorariosDisponiveisDto horariosDisponiveisDto)throws Exception{
         horariosDisponiveisService.save(toEntityHorariosDisponiveis(horariosDisponiveisDto));
+
        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
