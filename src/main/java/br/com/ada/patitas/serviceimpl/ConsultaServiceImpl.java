@@ -39,12 +39,12 @@ public class ConsultaServiceImpl implements ConsultaService {
         Optional<Consulta> consultaExistente = consultaRepository.findById(id);
         if (consultaExistente.isPresent()) {
             final Consulta consultaEncontrado = consultaExistente.get();
-            consultaEncontrado.setIdVeterinario(consultaAtualizado.getIdVeterinario());
-            consultaEncontrado.setIdPaciente(consultaAtualizado.getIdPaciente());
-            consultaEncontrado.setIdHorariosDisponiveis(consultaAtualizado.getIdHorariosDisponiveis());
-            consultaEncontrado.setServico(consultaAtualizado.getServico());
-            consultaEncontrado.setTipoServico(consultaAtualizado.getTipoServico());
-            consultaEncontrado.setPreco(consultaAtualizado.getPreco());
+           // consultaEncontrado.setIdVeterinario(consultaAtualizado.getIdVeterinario());
+           // consultaEncontrado.setIdPaciente(consultaAtualizado.getIdPaciente());
+           // consultaEncontrado.setIdHorariosDisponiveis(consultaAtualizado.getIdHorariosDisponiveis());
+//            consultaEncontrado.setServico(consultaAtualizado.getServico());
+//            consultaEncontrado.setTipoServico(consultaAtualizado.getTipoServico());
+//            consultaEncontrado.setPreco(consultaAtualizado.getPreco());
             consultaEncontrado.setStatus(consultaAtualizado.isStatus());
             return Optional.of(consultaRepository.save(consultaEncontrado));
         }
