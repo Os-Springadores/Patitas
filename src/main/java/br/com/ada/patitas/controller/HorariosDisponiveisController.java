@@ -31,6 +31,7 @@ public class HorariosDisponiveisController {
         List<HorariosDisponiveis> horariosDisponiveis = horariosDisponiveisService.findAll();
        return ResponseEntity.ok(toDtoHorariosDisponiveis(horariosDisponiveis));
     }
+
     @PostMapping
     public ResponseEntity<HorariosDisponiveis>save(@Valid @RequestBody HorariosDisponiveisDto horariosDisponiveisDto)throws Exception{
         horariosDisponiveisService.save(toEntityHorariosDisponiveis(horariosDisponiveisDto));
