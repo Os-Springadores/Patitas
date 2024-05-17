@@ -1,6 +1,7 @@
 package br.com.ada.patitas.model;
 
 public enum Servico {
+
     ATENDIMENTO_CLINICO("Consulta", "Medicação", "Curativo"),
     ATENDIMENTO_EMERGENCIAL("Primeiros Socorros", "Reanimação", "Estabilização"),
     CIRURGIA("Cirurgia de Castração", "Cirurgia Ortopédica", "Cirurgia Cardíaca", "Cirurgia Oncológica"),

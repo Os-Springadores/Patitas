@@ -2,6 +2,7 @@ package br.com.ada.patitas.controller;
 
 
 import br.com.ada.patitas.dto.ConsultaDto;
+import br.com.ada.patitas.dto.PacienteDto;
 import br.com.ada.patitas.model.Consulta;
 import br.com.ada.patitas.model.HorariosDisponiveis;
 import br.com.ada.patitas.model.Paciente;
@@ -25,9 +26,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static br.com.ada.patitas.mapper.ConsultaMapper.*;
+import static br.com.ada.patitas.mapper.PacienteMapper.toEntityPaciente;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -61,22 +64,22 @@ public class ConsultaController {
         HorariosDisponiveis horario = horariosDisponiveisRepository.findById(consultaDto.getIdHorariosDisponiveis()).orElse(null);
 
         if (horario == null || !horario.isStatus()) {
-        return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().build();
         }
-        Consulta consultaDisponivel=consultaService.save(toEntityConsulta(consultaDto));
-    horario.setStatus(false);
-    horariosDisponiveisRepository.save(horario);
-    return ResponseEntity.status(HttpStatus.CREATED).body(consultaDisponivel);
+        Consulta consultaDisponivel = consultaService.save(toEntityConsulta(consultaDto));
+        horario.setStatus(false);
+        horariosDisponiveisRepository.save(horario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(consultaDisponivel);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ConsultaDto> update(@PathVariable("id") final Long id, final ConsultaDto consultaDto) {
-        final Optional<Consulta> consultaOptional = consultaService.update(id, toEntityConsulta(consultaDto));
-        if (consultaOptional.isEmpty()) {
+    public ResponseEntity<ConsultaDto> update(@PathVariable("id") final Long id, @Valid @RequestBody final ConsultaDto consultaAtualizado) {
+        final Optional<Consulta> optionalConsulta = consultaService.update(id, toEntityConsulta(consultaAtualizado));
+        if (optionalConsulta.isEmpty())
             return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(consultaDto);
+        return ResponseEntity.ok(consultaAtualizado);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) throws Exception {

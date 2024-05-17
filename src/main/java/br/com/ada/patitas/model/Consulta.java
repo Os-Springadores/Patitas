@@ -31,7 +31,6 @@ public class Consulta {
     @Column(name = "paciente_id")
     private Long idPaciente;
 
-
     @Column(name = "horarios_disponiveis_id")
     private Long idHorariosDisponiveis;
 
@@ -44,5 +43,7 @@ public class Consulta {
 
     @Column(name = "preco")
     private Double preco;
+    @Column(name = "status")
+    private boolean status;
 
 }

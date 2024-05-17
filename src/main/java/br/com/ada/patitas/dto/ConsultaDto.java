@@ -26,6 +26,7 @@ public class ConsultaDto {
     private Servico servico;
     private String tipoServico;
     private Double preco;
+    private boolean status;
 
 
 }

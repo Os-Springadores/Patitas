@@ -24,6 +24,7 @@ public class ConsultaMapper {
                     .servico(consulta.getServico())
                     .tipoServico(consulta.getTipoServico())
                     .preco(consulta.getPreco())
+                    .status(consulta.isStatus())
                     .build();
         }
         return null;
@@ -38,6 +39,7 @@ public class ConsultaMapper {
                 .servico(consultaDto.getServico())
                 .tipoServico(consultaDto.getTipoServico())
                 .preco(consultaDto.getPreco())
+                .status(consultaDto.isStatus())
                 .build();
     }
 }

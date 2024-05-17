@@ -2,6 +2,7 @@ package br.com.ada.patitas.serviceimpl;
 
 import br.com.ada.patitas.exception.ConsultaJaExisteException;
 import br.com.ada.patitas.model.Consulta;
+import br.com.ada.patitas.model.Paciente;
 import br.com.ada.patitas.repository.ConsultaRepository;
 import br.com.ada.patitas.service.ConsultaService;
 import lombok.RequiredArgsConstructor;
@@ -34,20 +35,20 @@ public class ConsultaServiceImpl implements ConsultaService {
     }
 
     @Override
-    public Optional<Consulta> update(Long id, Consulta consultaAtualizado) {
-        final Optional<Consulta> consultaOptional = consultaRepository.findById(id);
-        if (consultaOptional.isPresent()) {
-            final Consulta consultaEncontrada = consultaOptional.get();
-            consultaEncontrada.setIdVeterinario(consultaAtualizado.getIdVeterinario());
-            consultaEncontrada.setIdPaciente(consultaAtualizado.getIdPaciente());
-            consultaEncontrada.setIdHorariosDisponiveis(consultaAtualizado.getIdHorariosDisponiveis());
-            consultaEncontrada.setServico(consultaAtualizado.getServico());
-            consultaEncontrada.setTipoServico(consultaAtualizado.getTipoServico());
-            consultaEncontrada.setPreco(consultaAtualizado.getPreco());
-            consultaRepository.save(consultaEncontrada);
-            return Optional.of(consultaAtualizado);
+    public Optional<Consulta> update(final Long id, final Consulta consultaAtualizado) {
+        Optional<Consulta> consultaExistente = consultaRepository.findById(id);
+        if (consultaExistente.isPresent()) {
+            final Consulta consultaEncontrado = consultaExistente.get();
+            consultaEncontrado.setIdVeterinario(consultaAtualizado.getIdVeterinario());
+            consultaEncontrado.setIdPaciente(consultaAtualizado.getIdPaciente());
+            consultaEncontrado.setIdHorariosDisponiveis(consultaAtualizado.getIdHorariosDisponiveis());
+            consultaEncontrado.setServico(consultaAtualizado.getServico());
+            consultaEncontrado.setTipoServico(consultaAtualizado.getTipoServico());
+            consultaEncontrado.setPreco(consultaAtualizado.getPreco());
+            consultaEncontrado.setStatus(consultaAtualizado.isStatus());
+            return Optional.of(consultaRepository.save(consultaEncontrado));
         }
-        return consultaOptional;
+        return consultaExistente;
     }
 
     @Override
