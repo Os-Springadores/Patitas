@@ -35,4 +35,6 @@ public class Consulta {
     @Column(name = "horarios_disponiveis_id")
     private Long idHorariosDisponiveis;
 
+    @Column(name = "motivo_da_consulta")
+    private String motivoDaConsuta;
 }

@@ -1,88 +1,129 @@
 package br.com.ada.patitas.controller;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-import br.com.ada.patitas.dto.ConsultaDto;
+import br.com.ada.patitas.DataConsulta;
 import br.com.ada.patitas.model.Consulta;
 import br.com.ada.patitas.service.ConsultaService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@WebMvcTest
+@AutoConfigureMockMvc
 public class ConsultaControllerTest {
 
-    @Mock
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockBean
     private ConsultaService consultaService;
 
-    @InjectMocks
-    private ConsultaController consultaController;
+    private final ObjectMapper mapper = new ObjectMapper();
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
-    public void testFindAll() {
-        Consulta consulta1 = new Consulta();
-        Consulta consulta2 = new Consulta();
-        List<Consulta> consultas = Arrays.asList(consulta1, consulta2);
-
-
+    public void testaListaDeConsultas() throws Exception {
+        List<Consulta> consultas = DataConsulta.listaDeConsultas();
+        String consultasJson = mapper.writeValueAsString(consultas);
         when(consultaService.findAll()).thenReturn(consultas);
 
-        ResponseEntity<List<ConsultaDto>> response = consultaController.findAll();
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(2, response.getBody().size());
+        mockMvc.perform(get("/consulta"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(consultasJson));
+
     }
 
     @Test
-    public void testFindById() {
-        Consulta consulta = new Consulta();
-        consulta.setId(1L);
-
-        when(consultaService.findById(anyLong())).thenReturn(Optional.of(consulta));
-
-        ResponseEntity<ConsultaDto> response = consultaController.findById(1L);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(1L, response.getBody().getId());
+    void deveRetornarNaoEncontradoSeConsultaNaoExiste() throws Exception {
+        mockMvc.perform(get("/consulta/1"))
+                .andExpect(status().isNotFound());
     }
 
     @Test
-    public void testSave() {
-        ConsultaDto consultaDto = new ConsultaDto();
+    public void deveEncontrarConsultaPorId() throws Exception {
+        Consulta consulta = DataConsulta.consulta();
+        String consultaJson = mapper.writeValueAsString(consulta);
+        when(consultaService.findById(1l)).thenReturn(Optional.of(consulta));
 
-        ResponseEntity<Consulta> response = consultaController.save(consultaDto);
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        verify(consultaService, times(1)).save(any());
+        mockMvc.perform(get("/consulta/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(consultaJson));
     }
 
     @Test
-    public void testUpdate() {
-        ConsultaDto consultaDto = new ConsultaDto();
-        consultaDto.setId(1L);
+    public void deveInserirConsulta() throws Exception {
+        Consulta consulta = DataConsulta.consulta();
+        String consultaJson = mapper.writeValueAsString(consulta);
 
-        when(consultaService.update(anyLong(), any())).thenReturn(Optional.of(new Consulta()));
+        mockMvc.perform(post("/consulta")
+                .content(consultaJson)
+                .contentType("application/json")
+        )
+                .andExpect(status().isCreated());
 
-        ResponseEntity<ConsultaDto> response = consultaController.update(1L, consultaDto);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(1L, response.getBody().getId());
+        verify(consultaService).save(any(Consulta.class));
+    }
+
+    public static Stream<Arguments> gerarDadosInvalidosParaConsulta() {
+        return Stream.of(
+                arguments(
+                        new Consulta(1l, 1l,1l, 1l,null),
+                        "id",
+                        "must not be blank"
+                ),
+                arguments(
+                        new Consulta(2l, 2l,2l, 2l,null),
+                        "id",
+                        "must not be blank"
+                ),
+                arguments(
+                        new Consulta(3l, 3l,3l, 3l,null),
+                        "id",
+                        "must not be blank"
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("gerarDadosInvalidosParaConsulta")
+    void deveValidarConsultaAntesDeInserir(Consulta consulta, String atributo, String erroEsperado) throws Exception {
+        String alunoJson = mapper.writeValueAsString(consulta);
+        String path = "$." + atributo;
+
+        mockMvc.perform(post("/consulta")
+                .content(alunoJson)
+                .contentType("application/json")
+        )
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath(path).value(erroEsperado));
+
+        verifyNoInteractions(consultaService);
     }
 
     @Test
-    public void testDelete() throws Exception {
-        ResponseEntity<Void> response = consultaController.delete(1L);
-        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-        verify(consultaService, times(1)).delete(anyLong());
+    public void deveDeletarConsulta() throws Exception {
+        mockMvc.perform(delete("/consulta/1"))
+                .andExpect(status().isOk());
+
+        verify(consultaService).delete(1l);
     }
 }

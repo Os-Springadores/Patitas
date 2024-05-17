@@ -32,40 +32,40 @@ public class ConsultaServiceImplTest {
     }
 
     @Test
-    public void testFindAll() {
+    public void testaListaDeConsultas() {
         List<Consulta> consultas = new ArrayList<>();
         when(consultaRepository.findAll()).thenReturn(consultas);
 
-        List<Consulta> result = consultaService.findAll();
+        List<Consulta> consulta = consultaService.findAll();
 
-        assertEquals(consultas, result);
+        assertEquals(consultas, consulta);
     }
 
     @Test
-    public void testFindById() {
+    public void testaConsultaPorId() {
         Consulta consulta = new Consulta();
         consulta.setId(1L);
         when(consultaRepository.findById(1L)).thenReturn(Optional.of(consulta));
 
-        Optional<Consulta> result = consultaService.findById(1L);
+        Optional<Consulta> consultaOptional = consultaService.findById(1L);
 
-        assertTrue(result.isPresent());
-        assertEquals(consulta, result.get());
+        assertTrue(consultaOptional.isPresent());
+        assertEquals(consulta, consultaOptional.get());
     }
 
     @Test
-    public void testSave() {
+    public void testaCadastroDeConsulta() {
         Consulta consulta = new Consulta();
         when(consultaRepository.save(consulta)).thenReturn(consulta);
 
 
-        Consulta result = consultaService.save(consulta);
+        Consulta consulta1 = consultaService.save(consulta);
 
-        assertEquals(consulta, result);
+        assertEquals(consulta, consulta1);
     }
 
     @Test
-    public void testUpdate() {
+    public void testaAtualizaçãoDeConsulta() {
         Consulta consulta = new Consulta();
         consulta.setId(1L);
         Consulta consultaAtualizado = new Consulta();
@@ -84,7 +84,7 @@ public class ConsultaServiceImplTest {
     }
 
     @Test
-    public void testDelete() {
+    public void testaDeletarConsulta() {
         Consulta consulta = new Consulta();
         consulta.setId(1L);
         when(consultaRepository.findById(1L)).thenReturn(Optional.of(consulta));

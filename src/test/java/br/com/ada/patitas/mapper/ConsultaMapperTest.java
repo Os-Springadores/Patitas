@@ -11,8 +11,8 @@ public class ConsultaMapperTest {
 
     @Test
     public void testToDtoConsulta() {
-        Consulta consulta1 = new Consulta(1L, 1L, 1L);
-        Consulta consulta2 = new Consulta(2L, 2L, 2L);
+        Consulta consulta1 = new Consulta(1L, 1L, 1L,1l,"null");
+        Consulta consulta2 = new Consulta(2L, 2L, 2L,2l,"null");
         List<Consulta> consultas = new ArrayList<>();
         consultas.add(consulta1);
         consultas.add(consulta2);
@@ -30,7 +30,7 @@ public class ConsultaMapperTest {
 
     @Test
     public void testToDtoConsultaDto() {
-        Consulta consulta = new Consulta(1L, 1L, 1L);
+        Consulta consulta = new Consulta(1L, 1L, 1L,1l,"null");
 
         ConsultaDto consultaDto = ConsultaMapper.toDtoConsultaDto(consulta);
 
@@ -42,7 +42,7 @@ public class ConsultaMapperTest {
 
     @Test
     public void testToEntityConsulta() {
-        ConsultaDto consultaDto = new ConsultaDto(1L, 1L, 1L);
+        ConsultaDto consultaDto = new ConsultaDto(1L,1l,1l,"null");
 
         Consulta consulta = ConsultaMapper.toEntityConsulta(consultaDto);
 

@@ -16,7 +16,7 @@ import org.mockito.MockitoAnnotations;
 import br.com.ada.patitas.exception.PacienteJaExisteException;
 import br.com.ada.patitas.model.Paciente;
 import br.com.ada.patitas.repository.PacienteRepository;
-import br.com.ada.patitas.serviceimpl.PacienteServiceImpl;
+
 
 public class PacienteServiceImplTest {
 
@@ -32,13 +32,13 @@ public class PacienteServiceImplTest {
     }
 
     @Test
-    public void testFindAll() {
-        List<Paciente> pacientes = new ArrayList<>();
-        when(pacienteRepository.findAll()).thenReturn(pacientes);
+    public void deveListarPacientes() {
+        List<Paciente> paciente = new ArrayList<>();
+        when(pacienteRepository.findAll()).thenReturn(paciente);
 
-        List<Paciente> result = pacienteService.findAll();
+        List<Paciente> pacientes = pacienteService.findAll();
 
-        assertEquals(pacientes, result);
+        assertEquals(paciente, pacientes);
     }
 
     @Test
@@ -47,10 +47,10 @@ public class PacienteServiceImplTest {
         paciente.setId(1L);
         when(pacienteRepository.findById(1L)).thenReturn(Optional.of(paciente));
 
-        Optional<Paciente> result = pacienteService.findById(1L);
+        Optional<Paciente> pacienteOptional = pacienteService.findById(1L);
 
-        assertTrue(result.isPresent());
-        assertEquals(paciente, result.get());
+        assertTrue(pacienteOptional.isPresent());
+        assertEquals(paciente, pacienteOptional.get());
     }
 
     @Test

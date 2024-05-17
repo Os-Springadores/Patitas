@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.ada.patitas.DataHorariosDisponiveis;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -43,8 +44,9 @@ public class HorariosDisponiveisControllerTest {
     }
 
     @Test
-    public void testFindAll() throws Exception {
-        List<HorariosDisponiveis> horariosDisponiveis = new ArrayList<>();
+    public void deveListarTodosHorarios() throws Exception {
+        List<HorariosDisponiveis> horariosDisponiveis = DataHorariosDisponiveis.listaHorariosDisponiveis();
+
         when(horariosDisponiveisService.findAll()).thenReturn(horariosDisponiveis);
 
         mockMvc.perform(get("/horariosDisponiveis"))

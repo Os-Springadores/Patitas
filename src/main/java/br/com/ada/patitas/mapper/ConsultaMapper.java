@@ -21,6 +21,7 @@ public class ConsultaMapper {
                     .idVeterinario(consulta.getIdVeterinario())
                     .idPaciente(consulta.getIdPaciente())
                     .idHorariosDisponiveis(consulta.getIdHorariosDisponiveis())
+                    .motivoDaConsulta(consulta.getMotivoDaConsuta())
                     .build();
         }
         return null;
@@ -32,6 +33,7 @@ public class ConsultaMapper {
                 .idVeterinario(consultaDto.getIdVeterinario())
                 .idPaciente(consultaDto.getIdPaciente())
                 .idHorariosDisponiveis(consultaDto.getIdHorariosDisponiveis())
+                .motivoDaConsuta(consultaDto.getMotivoDaConsulta())
                 .build();
     }
 }
