@@ -12,12 +12,12 @@ public class VeterinarioMapper {
     public static List<VeterinarioDto> toDtoVeterinario(final List<Veterinario> entities) {
 
         return entities.stream()
-                .map(entity -> toDtoVeterinarioDto(entity))
+                .map(entity -> toDtoVeterinario(entity))
                 .collect(Collectors.toList());
 
     }
 
-    public static VeterinarioDto toDtoVeterinarioDto(final Veterinario entity) {
+    public static VeterinarioDto toDtoVeterinario(final Veterinario entity) {
         if (Objects.nonNull(entity)) {
             return VeterinarioDto.builder()
                     .nome(entity.getNome())

@@ -3,6 +3,7 @@ package br.com.ada.patitas.serviceimpl;
 import br.com.ada.patitas.exception.PacienteJaExisteException;
 import br.com.ada.patitas.service.PacienteService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.ada.patitas.model.Paciente;
 import br.com.ada.patitas.repository.PacienteRepository;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PacienteServiceImpl implements PacienteService {
 
+    @Autowired
     private final PacienteRepository pacienteRepository;
 
     @Override
@@ -49,15 +51,12 @@ public class PacienteServiceImpl implements PacienteService {
         }
         return pacienteExistente;
     }
-
     @Override
     public void delete(Long id) {
         Optional<Paciente> entity = pacienteRepository.findById(id);
-
         if (entity.isEmpty()) {
             throw new PacienteJaExisteException("O cliente com id " + id + " não existe!");
         }
         pacienteRepository.delete(entity.get());
-
     }
 }
