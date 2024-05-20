@@ -57,7 +57,6 @@ public class HorariosDisponiveisControllerTest {
     @Test
     public void testSave() throws Exception {
         HorariosDisponiveisDto horariosDisponiveisDto = new HorariosDisponiveisDto();
-        // Set necessary fields in the DTO
 
         String requestBody = objectMapper.writeValueAsString(horariosDisponiveisDto);
 
