@@ -1,6 +1,7 @@
 package br.com.ada.patitas.serviceimpl;
 
 import br.com.ada.patitas.exception.ConsultaJaExisteException;
+import br.com.ada.patitas.exception.HorarioJaExisteException;
 import br.com.ada.patitas.model.HorariosDisponiveis;
 import br.com.ada.patitas.repository.HorariosDisponiveisRepository;
 import br.com.ada.patitas.service.HorariosDisponiveisService;
@@ -22,7 +23,7 @@ public class HorariosDisponiveisServiceImpl implements HorariosDisponiveisServic
     @Override
     public HorariosDisponiveis save(HorariosDisponiveis horariosDisponiveis) {
         if (horariosDisponiveis.getId() != null && horariosDisponiveisRepository.findById(horariosDisponiveis.getId()).isPresent()) {
-            throw new ConsultaJaExisteException("A consulta com id " + horariosDisponiveis.getId() + " já existe!");
+            throw new HorarioJaExisteException("O horario com id " + horariosDisponiveis.getId() + " já existe!");
         }
         return horariosDisponiveisRepository.save(horariosDisponiveis);
     }
