@@ -41,6 +41,7 @@ public class ConsultaController {
     @Autowired
     private final ConsultaService consultaService;
     private final HorariosDisponiveisRepository horariosDisponiveisRepository;
+    private final VeterinarioRepository veterinarioRepository;
 
     @GetMapping
     public ResponseEntity<List<ConsultaDto>> findAll() {
@@ -62,7 +63,11 @@ public class ConsultaController {
     public ResponseEntity<Consulta> save(@Valid @RequestBody final ConsultaDto consultaDto) {
 
         HorariosDisponiveis horario = horariosDisponiveisRepository.findById(consultaDto.getIdHorariosDisponiveis()).orElse(null);
+        Veterinario veterinario = veterinarioRepository.findById(consultaDto.getIdVeterinario()).orElse(null);
 
+        if (veterinario == null || !veterinario.getEspecialidade().contem(consultaDto.getServico())) {
+            return ResponseEntity.badRequest().build();
+        }
         if (horario == null || !horario.isStatus()) {
             return ResponseEntity.badRequest().build();
         }

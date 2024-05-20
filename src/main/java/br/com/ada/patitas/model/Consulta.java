@@ -25,14 +25,20 @@ public class Consulta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "veterinario_id")
-    private Long idVeterinario;
+    @ManyToOne
+    @JoinColumn(name="veterinario_id")
 
-    @Column(name = "paciente_id")
-    private Long idPaciente;
+    private Veterinario veterinario;
 
-    @Column(name = "horarios_disponiveis_id")
-    private Long idHorariosDisponiveis;
+    @ManyToOne
+    @JoinColumn(name="paciente_id")
+
+    private Paciente paciente;
+
+    @ManyToOne
+    @JoinColumn(name="horarios_disponiveis_id")
+
+    private HorariosDisponiveis horariosDisponiveis;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "servico")
