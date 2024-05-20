@@ -7,7 +7,7 @@ import br.com.ada.patitas.service.ConsultaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
+
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,10 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -83,25 +80,25 @@ public class ConsultaControllerTest {
         verify(consultaService).save(any(Consulta.class));
     }
 
-    public static Stream<Arguments> gerarDadosInvalidosParaConsulta() {
-        return Stream.of(
-                arguments(
-                        new Consulta(1l, 1l,1l, 1l,null),
-                        "id",
-                        "must not be blank"
-                ),
-                arguments(
-                        new Consulta(2l, 2l,2l, 2l,null),
-                        "id",
-                        "must not be blank"
-                ),
-                arguments(
-                        new Consulta(3l, 3l,3l, 3l,null),
-                        "id",
-                        "must not be blank"
-                )
-        );
-    }
+//    public static Stream<Arguments> gerarDadosInvalidosParaConsulta() {
+//        return Stream.of(
+//                arguments(
+//                        new Consulta(1l, 1l,1l, 1l,null),
+//                        "id",
+//                        "must not be blank"
+//                ),
+//                arguments(
+//                        new Consulta(2l, 2l,2l, 2l,null),
+//                        "id",
+//                        "must not be blank"
+//                ),
+//                arguments(
+//                        new Consulta(3l, 3l,3l, 3l,null),
+//                        "id",
+//                        "must not be blank"
+//                )
+//        );
+//    }
 
     @ParameterizedTest
     @MethodSource("gerarDadosInvalidosParaConsulta")

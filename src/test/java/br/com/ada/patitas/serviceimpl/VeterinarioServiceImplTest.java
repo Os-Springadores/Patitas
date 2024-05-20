@@ -16,7 +16,6 @@ import org.mockito.MockitoAnnotations;
 import br.com.ada.patitas.exception.VeterinarioJaExisteException;
 import br.com.ada.patitas.model.Veterinario;
 import br.com.ada.patitas.repository.VeterinarioRepository;
-import br.com.ada.patitas.serviceimpl.VeterinarioServiceImpl;
 
 public class VeterinarioServiceImplTest {
 

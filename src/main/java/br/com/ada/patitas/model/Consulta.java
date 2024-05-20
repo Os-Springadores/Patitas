@@ -6,12 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.type.SqlTypes;
-
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -36,5 +30,5 @@ public class Consulta {
     private Long idHorariosDisponiveis;
 
     @Column(name = "motivo_da_consulta")
-    private String motivoDaConsuta;
+    private String motivoDaConsulta;
 }

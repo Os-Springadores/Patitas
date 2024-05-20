@@ -13,10 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import br.com.ada.patitas.exception.ConsultaJaExisteException;
 import br.com.ada.patitas.model.Consulta;
 import br.com.ada.patitas.repository.ConsultaRepository;
-import br.com.ada.patitas.serviceimpl.ConsultaServiceImpl;
 
 public class ConsultaServiceImplTest {
 
@@ -34,6 +32,7 @@ public class ConsultaServiceImplTest {
     @Test
     public void testaListaDeConsultas() {
         List<Consulta> consultas = new ArrayList<>();
+
         when(consultaRepository.findAll()).thenReturn(consultas);
 
         List<Consulta> consulta = consultaService.findAll();

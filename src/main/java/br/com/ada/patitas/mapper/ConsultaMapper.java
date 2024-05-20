@@ -11,7 +11,7 @@ public class ConsultaMapper {
 
     public static List<ConsultaDto> toDtoConsulta(final List<Consulta> consultas) {
         return consultas.stream()
-                .map(entity ->toDtoConsultaDto(entity))
+                .map(entity -> toDtoConsultaDto(entity))
                 .collect(Collectors.toList());
     }
 
@@ -21,19 +21,19 @@ public class ConsultaMapper {
                     .idVeterinario(consulta.getIdVeterinario())
                     .idPaciente(consulta.getIdPaciente())
                     .idHorariosDisponiveis(consulta.getIdHorariosDisponiveis())
-                    .motivoDaConsulta(consulta.getMotivoDaConsuta())
+                    .motivoDaConsulta(consulta.getMotivoDaConsulta())
                     .build();
         }
         return null;
     }
 
 
-    public static Consulta toEntityConsulta(final ConsultaDto consultaDto){
+    public static Consulta toEntityConsulta(final ConsultaDto consultaDto) {
         return Consulta.builder()
                 .idVeterinario(consultaDto.getIdVeterinario())
                 .idPaciente(consultaDto.getIdPaciente())
                 .idHorariosDisponiveis(consultaDto.getIdHorariosDisponiveis())
-                .motivoDaConsuta(consultaDto.getMotivoDaConsulta())
+                .motivoDaConsulta(consultaDto.getMotivoDaConsulta())
                 .build();
     }
 }
