@@ -46,21 +46,39 @@ public class HorariosDisponiveisControllerTest {
     }
 
     @Test
+<<<<<<< HEAD
     public void deveListarHorariosDisponiveis() throws Exception {
         List<HorariosDisponiveis> horariosDisponiveis = new ArrayList<>();
         when(horariosDisponiveisService.findAll()).thenReturn(horariosDisponiveis);
 
+=======
+    public void testFindAll() throws Exception {
+        
+        List<HorariosDisponiveis> horariosDisponiveis = new ArrayList<>();
+        when(horariosDisponiveisService.findAll()).thenReturn(horariosDisponiveis);
+
+        
+>>>>>>> 951050a5916b37fa67d563f5fa9a8c4edf53b6ee
         mockMvc.perform(get("/horariosDisponiveis"))
                 .andExpect(status().isOk());
     }
 
     @Test
+<<<<<<< HEAD
     public void deveCadastrarUmHorarioDisponivel() throws Exception {
+=======
+    public void testSave() throws Exception {
+     
+>>>>>>> 951050a5916b37fa67d563f5fa9a8c4edf53b6ee
         HorariosDisponiveisDto horariosDisponiveisDto = new HorariosDisponiveisDto();
         horariosDisponiveisDto.getHorariosDisponiveis();
 
         String requestBody = objectMapper.writeValueAsString(horariosDisponiveisDto);
 
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 951050a5916b37fa67d563f5fa9a8c4edf53b6ee
         mockMvc.perform(post("/horariosDisponiveis")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
