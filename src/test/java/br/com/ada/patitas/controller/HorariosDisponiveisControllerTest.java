@@ -1,38 +1,37 @@
 package br.com.ada.patitas.controller;
 
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Arrays;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-
-import br.com.ada.patitas.controller.HorariosDisponiveisController;
 import br.com.ada.patitas.dto.HorariosDisponiveisDto;
 import br.com.ada.patitas.model.HorariosDisponiveis;
 import br.com.ada.patitas.service.HorariosDisponiveisService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+
+import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+@WebMvcTest(HorariosDisponiveisController.class)
 public class HorariosDisponiveisControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @MockBean
     private HorariosDisponiveisService horariosDisponiveisService;
@@ -40,46 +39,34 @@ public class HorariosDisponiveisControllerTest {
     @InjectMocks
     private HorariosDisponiveisController horariosDisponiveisController;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-<<<<<<< HEAD
     public void deveListarHorariosDisponiveis() throws Exception {
-        List<HorariosDisponiveis> horariosDisponiveis = new ArrayList<>();
+        List<HorariosDisponiveis> horariosDisponiveis = Arrays.asList(new HorariosDisponiveis(), new HorariosDisponiveis());
         when(horariosDisponiveisService.findAll()).thenReturn(horariosDisponiveis);
 
-=======
-    public void testFindAll() throws Exception {
-        
-        List<HorariosDisponiveis> horariosDisponiveis = new ArrayList<>();
-        when(horariosDisponiveisService.findAll()).thenReturn(horariosDisponiveis);
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/horariosDisponiveis"))
+                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
 
-        
->>>>>>> 951050a5916b37fa67d563f5fa9a8c4edf53b6ee
-        mockMvc.perform(get("/horariosDisponiveis"))
-                .andExpect(status().isOk());
+        List<HorariosDisponiveisDto> responseDto = objectMapper.readValue(result.getResponse().getContentAsString(),
+                objectMapper.getTypeFactory().constructCollectionType(List.class, HorariosDisponiveisDto.class));
+        assertEquals(horariosDisponiveis.size(), responseDto.size());
     }
 
     @Test
-<<<<<<< HEAD
-    public void deveCadastrarUmHorarioDisponivel() throws Exception {
-=======
-    public void testSave() throws Exception {
-     
->>>>>>> 951050a5916b37fa67d563f5fa9a8c4edf53b6ee
+    public void deveCadastrarHorarioDisponivel() throws Exception {
         HorariosDisponiveisDto horariosDisponiveisDto = new HorariosDisponiveisDto();
-        horariosDisponiveisDto.getHorariosDisponiveis();
 
         String requestBody = objectMapper.writeValueAsString(horariosDisponiveisDto);
 
-<<<<<<< HEAD
-=======
-    
->>>>>>> 951050a5916b37fa67d563f5fa9a8c4edf53b6ee
-        mockMvc.perform(post("/horariosDisponiveis")
+        mockMvc.perform(MockMvcRequestBuilders.post("/horariosDisponiveis")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
                 .andExpect(status().isCreated());

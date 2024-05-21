@@ -3,29 +3,18 @@ package br.com.ada.patitas.serviceimpl;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
-import java.util.List;
-<<<<<<< HEAD
-=======
-import java.util.Optional;
->>>>>>> 951050a5916b37fa67d563f5fa9a8c4edf53b6ee
 
+import br.com.ada.patitas.model.HorariosDisponiveis;
+import br.com.ada.patitas.repository.HorariosDisponiveisRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-<<<<<<< HEAD
-import br.com.ada.patitas.model.HorariosDisponiveis;
-import br.com.ada.patitas.repository.HorariosDisponiveisRepository;
+import java.util.ArrayList;
+import java.util.List;
 
-=======
-import br.com.ada.patitas.exception.ConsultaJaExisteException;
-import br.com.ada.patitas.model.HorariosDisponiveis;
-import br.com.ada.patitas.repository.HorariosDisponiveisRepository;
-import br.com.ada.patitas.serviceimpl.HorariosDisponiveisServiceImpl;
->>>>>>> 951050a5916b37fa67d563f5fa9a8c4edf53b6ee
 
 public class HorariosDisponiveisServiceImplTest {
 
@@ -41,7 +30,6 @@ public class HorariosDisponiveisServiceImplTest {
     }
 
     @Test
-<<<<<<< HEAD
     public void deveListarHorariosDisponiveis() {
         List<HorariosDisponiveis> horariosDisponiveis = new ArrayList<>();
         when(horariosDisponiveisRepository.findAll()).thenReturn(horariosDisponiveis);
@@ -63,40 +51,5 @@ public class HorariosDisponiveisServiceImplTest {
     }
 
 }
-=======
-    public void testFindAll() {
-
-        List<HorariosDisponiveis> horariosDisponiveis = new ArrayList<>();
-        when(horariosDisponiveisRepository.findAll()).thenReturn(horariosDisponiveis);
 
 
-        List<HorariosDisponiveis> result = horariosDisponiveisService.findAll();
-
-        assertEquals(horariosDisponiveis, result);
-    }
-
-    @Test
-    public void testSave() {
-      
-        HorariosDisponiveis horariosDisponiveis = new HorariosDisponiveis();
-        when(horariosDisponiveisRepository.save(horariosDisponiveis)).thenReturn(horariosDisponiveis);
-
- 
-        HorariosDisponiveis result = horariosDisponiveisService.save(horariosDisponiveis);
-
-  
-        assertEquals(horariosDisponiveis, result);
-    }
-
-    @Test
-    public void testSaveWithExistingId() {
-   
-        HorariosDisponiveis horariosDisponiveis = new HorariosDisponiveis();
-        horariosDisponiveis.setId(1L);
-        when(horariosDisponiveisRepository.findById(1L)).thenReturn(Optional.of(horariosDisponiveis));
-
-       
-        assertThrows(ConsultaJaExisteException.class, () -> horariosDisponiveisService.save(horariosDisponiveis));
-    }
-}
->>>>>>> 951050a5916b37fa67d563f5fa9a8c4edf53b6ee
