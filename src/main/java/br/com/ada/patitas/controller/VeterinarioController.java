@@ -41,25 +41,22 @@ public class VeterinarioController {
         if (veterinarioOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(toDtoVeterinarioDto(veterinarioOptional.get()));
+        return ResponseEntity.ok(toDtoVeterinario(veterinarioOptional.get()));
     }
 
 
     @PostMapping
-    public ResponseEntity<Veterinario> save(@Valid @RequestBody VeterinarioDto veterinarioDto) throws Exception {
+    public ResponseEntity<?> save(@Valid @RequestBody VeterinarioDto veterinarioDto) throws Exception {
         veterinarioService.save(toEntityVeterinario(veterinarioDto));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<VeterinarioDto> update(@PathVariable("id") final Long id, @Valid @RequestBody final VeterinarioDto veterinarioDto) {
-        final Optional<Veterinario> veterinarioOptional = veterinarioService.update(id, toEntityVeterinario(veterinarioDto));
-        if (veterinarioOptional.isEmpty()) {
-
+    public ResponseEntity<VeterinarioDto> update(@PathVariable("id") final Long id, @Valid @RequestBody final VeterinarioDto veterinarioAtualizado) {
+        final Optional<Veterinario> veterinarioOptional = veterinarioService.update(id, toEntityVeterinario(veterinarioAtualizado));
+        if (veterinarioOptional.isEmpty())
             return ResponseEntity.notFound().build();
-
-        }
-        return ResponseEntity.ok(veterinarioDto);
+        return ResponseEntity.ok(veterinarioAtualizado);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) throws Exception {

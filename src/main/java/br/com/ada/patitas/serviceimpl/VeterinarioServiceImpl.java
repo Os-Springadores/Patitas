@@ -16,10 +16,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class VeterinarioServiceImpl implements VeterinarioService {
 
-
     @Autowired
     private VeterinarioRepository veterinarioRepository;
-
 
     @Override
     public List<Veterinario> findAll() {
@@ -39,20 +37,17 @@ public class VeterinarioServiceImpl implements VeterinarioService {
         throw new VeterinarioJaExisteException("O veterinario com id " + veterinario.getId() + "já existe");
     }
 
-
     @Override
     public Optional<Veterinario> update(final Long id, final Veterinario veterinarioAtualizado) {
-        Optional<Veterinario> veterinarioExistente = veterinarioRepository.findById(id);
+        final Optional<Veterinario> veterinarioExistente = veterinarioRepository.findById(id);
         if (veterinarioExistente.isPresent()) {
             final Veterinario veterinarioEncontrado = veterinarioExistente.get();
             veterinarioEncontrado.setNome(veterinarioAtualizado.getNome());
             veterinarioEncontrado.setEspecialidade(veterinarioAtualizado.getEspecialidade());
-            return Optional.of(veterinarioRepository.save(veterinarioAtualizado));
+            return Optional.of(veterinarioRepository.save(veterinarioEncontrado));
         }
         return veterinarioExistente;
     }
-
-
     @Override
     public void delete(Long id) {
         Optional<Veterinario> veterinarioOptional = veterinarioRepository.findById(id);
@@ -61,5 +56,4 @@ public class VeterinarioServiceImpl implements VeterinarioService {
         }
         veterinarioRepository.delete(veterinarioOptional.get());
     }
-
 }

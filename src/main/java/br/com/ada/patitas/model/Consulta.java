@@ -6,12 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.type.SqlTypes;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -25,14 +20,29 @@ public class Consulta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "veterinario_id")
-    private Long idVeterinario;
+    @ManyToOne
+    @JoinColumn(name = "veterinario_id")
+    private Veterinario veterinario;
 
-    @Column(name = "paciente_id")
-    private Long idPaciente;
+    @ManyToOne
+    @JoinColumn(name = "paciente_id")
+    private Paciente paciente;
 
+    @ManyToOne
+    @JoinColumn(name = "horarios_disponiveis_id")
+    private HorariosDisponiveis horariosDisponiveis;
 
-    @Column(name = "horarios_disponiveis_id")
-    private Long idHorariosDisponiveis;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "servico")
+    private Servico servico;
+
+    @Column(name = "tipo_servico")
+    private String tipoServico;
+
+    @Column(name = "preco")
+    private Double preco;
+
+    @Column(name = "status")
+    private boolean status;
 
 }

@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -30,6 +31,8 @@ public class HorariosDisponiveisControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @MockBean
     private HorariosDisponiveisService horariosDisponiveisService;
@@ -43,25 +46,24 @@ public class HorariosDisponiveisControllerTest {
     }
 
     @Test
-    public void testFindAll() throws Exception {
-        // Given
+    public void deveListarHorariosDisponiveis() throws Exception {
         List<HorariosDisponiveis> horariosDisponiveis = new ArrayList<>();
         when(horariosDisponiveisService.findAll()).thenReturn(horariosDisponiveis);
 
-        // When & Then
         mockMvc.perform(get("/horariosDisponiveis"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testSave() throws Exception {
-        // Given
+    public void deveCadastrarUmHorarioDisponivel() throws Exception {
         HorariosDisponiveisDto horariosDisponiveisDto = new HorariosDisponiveisDto();
+        horariosDisponiveisDto.getHorariosDisponiveis();
 
-        // When & Then
+        String requestBody = objectMapper.writeValueAsString(horariosDisponiveisDto);
+
         mockMvc.perform(post("/horariosDisponiveis")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{}"))
+                .content(requestBody))
                 .andExpect(status().isCreated());
     }
 }
