@@ -14,6 +14,7 @@ public class ConsultaMapperTest {
 
     @Test
     public void testaToDtoConsulta() {
+
         Consulta consulta1 = new Consulta(1l, null, null,null, Servico.CIRURGIA,"Castração",250.0,true);
         Consulta consulta2 = new Consulta(2L, null, null,null,Servico.ATENDIMENTO_CLINICO,"Consulta",150.0,true);
 

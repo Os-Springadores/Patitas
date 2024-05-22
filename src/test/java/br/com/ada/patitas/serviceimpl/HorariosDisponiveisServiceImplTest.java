@@ -1,5 +1,6 @@
 package br.com.ada.patitas.serviceimpl;
 
+import static br.com.ada.patitas.DataHorariosDisponiveis.listaHorariosDisponiveis;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -8,30 +9,25 @@ import br.com.ada.patitas.model.HorariosDisponiveis;
 import br.com.ada.patitas.repository.HorariosDisponiveisRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class HorariosDisponiveisServiceImplTest {
 
-    @Mock
+
     private HorariosDisponiveisRepository horariosDisponiveisRepository;
 
-    @InjectMocks
     private HorariosDisponiveisServiceImpl horariosDisponiveisService;
 
     @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
+    public void preparar() {
+        horariosDisponiveisRepository= mock(HorariosDisponiveisRepository.class);
+        horariosDisponiveisService= new HorariosDisponiveisServiceImpl(horariosDisponiveisRepository);
     }
 
     @Test
     public void deveListarHorariosDisponiveis() {
-        List<HorariosDisponiveis> horariosDisponiveis = new ArrayList<>();
+        List<HorariosDisponiveis> horariosDisponiveis = listaHorariosDisponiveis();
         when(horariosDisponiveisRepository.findAll()).thenReturn(horariosDisponiveis);
 
         List<HorariosDisponiveis> horariosDisponiveisList = horariosDisponiveisService.findAll();
@@ -43,11 +39,8 @@ public class HorariosDisponiveisServiceImplTest {
     @Test
     public void deveCadastrarUmHorario() {
         HorariosDisponiveis horariosDisponiveis = new HorariosDisponiveis();
-        when(horariosDisponiveisRepository.save(horariosDisponiveis)).thenReturn(horariosDisponiveis);
-
-        HorariosDisponiveis horariosDisponiveisList = horariosDisponiveisService.save(horariosDisponiveis);
-
-        assertEquals(horariosDisponiveis, horariosDisponiveisList);
+       horariosDisponiveisService.save(horariosDisponiveis);
+       verify(horariosDisponiveisRepository).save(horariosDisponiveis);
     }
 
 }

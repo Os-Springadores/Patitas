@@ -3,6 +3,7 @@ package br.com.ada.patitas.controller;
 
 import br.com.ada.patitas.dto.HorariosDisponiveisDto;
 import br.com.ada.patitas.model.HorariosDisponiveis;
+import br.com.ada.patitas.repository.HorariosDisponiveisRepository;
 import br.com.ada.patitas.service.HorariosDisponiveisService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,15 +26,25 @@ public class HorariosDisponiveisController {
 
     @Autowired
     private HorariosDisponiveisService horariosDisponiveisService;
+    private final HorariosDisponiveisRepository horariosDisponiveisRepository;
+
 
     @GetMapping
-    public ResponseEntity<List<HorariosDisponiveisDto>> findAll(){
+    public ResponseEntity<List<HorariosDisponiveisDto>> findAll() {
         List<HorariosDisponiveis> horariosDisponiveis = horariosDisponiveisService.findAll();
-       return ResponseEntity.ok(toDtoHorariosDisponiveis(horariosDisponiveis));
+        return ResponseEntity.ok(toDtoHorariosDisponiveis(horariosDisponiveis));
     }
+
     @PostMapping
-    public ResponseEntity<HorariosDisponiveis>save(@Valid @RequestBody HorariosDisponiveisDto horariosDisponiveisDto)throws Exception{
-        horariosDisponiveisService.save(toEntityHorariosDisponiveis(horariosDisponiveisDto));
-       return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<HorariosDisponiveis> save(@Valid @RequestBody HorariosDisponiveisDto horariosDisponiveisDto) throws Exception {
+        HorariosDisponiveis horario = horariosDisponiveisRepository.findById(horariosDisponiveisDto.getIdVeterinario()).orElse(null);
+        if (horario == null || !horario.isStatus()) {
+            return ResponseEntity.badRequest().build();
+        }
+        HorariosDisponiveis horariosDisponiveis = horariosDisponiveisService.save(toEntityHorariosDisponiveis(horariosDisponiveisDto));
+
+        horario.setStatus(false);
+        horariosDisponiveisRepository.save(horario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(horariosDisponiveis);
     }
 }

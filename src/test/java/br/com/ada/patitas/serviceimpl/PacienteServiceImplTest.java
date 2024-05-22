@@ -1,17 +1,22 @@
 package br.com.ada.patitas.serviceimpl;
 
+import static br.com.ada.patitas.DataConsulta.consulta;
+import static br.com.ada.patitas.DataPaciente.listaPaciente;
+import static br.com.ada.patitas.DataPaciente.paciente;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import br.com.ada.patitas.exception.PacienteJaExisteException;
 import br.com.ada.patitas.model.Paciente;
@@ -19,54 +24,57 @@ import br.com.ada.patitas.repository.PacienteRepository;
 
 public class PacienteServiceImplTest {
 
-    @Mock
+
     private PacienteRepository pacienteRepository;
 
-    @InjectMocks
     private PacienteServiceImpl pacienteService;
 
     @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
+    public void preparar() {
+        pacienteRepository = mock(PacienteRepository.class);
+        pacienteService = new PacienteServiceImpl(pacienteRepository);
     }
 
     @Test
     public void deveListarPacientes() {
-        List<Paciente> paciente = new ArrayList<>();
-        when(pacienteRepository.findAll()).thenReturn(paciente);
+        List<Paciente> pacienteResposta = listaPaciente();
+        when(pacienteRepository.findAll()).thenReturn(pacienteResposta);
 
         List<Paciente> pacientes = pacienteService.findAll();
 
-        assertEquals(paciente, pacientes);
+        assertEquals(pacienteResposta, pacientes);
     }
 
-    @Test
-    public void deveProcurarPacientePorId() {
-        Paciente paciente = new Paciente();
-        paciente.setId(1L);
-        when(pacienteRepository.findById(1L)).thenReturn(Optional.of(paciente));
+    public static Stream<Arguments> gerarPacienteOptional() {
+        return Stream.of(
+                arguments(Optional.of(paciente())),
+                arguments(Optional.empty())
+
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("gerarPacienteOptional")
+    void deveBuscarPacientePorId(Optional<Paciente> pacienteEsperado) {
+        when(pacienteRepository.findById(1L)).thenReturn(pacienteEsperado);
 
         Optional<Paciente> pacienteOptional = pacienteService.findById(1L);
 
-        assertTrue(pacienteOptional.isPresent());
-        assertEquals(paciente, pacienteOptional.get());
+        assertEquals(pacienteEsperado, pacienteOptional);
+        verify(pacienteRepository).findById(1L);
     }
+
 
     @Test
     public void deveCadastrarUmPaciente() {
         Paciente paciente = new Paciente();
-        when(pacienteRepository.findById(anyLong())).thenReturn(Optional.empty());
-        when(pacienteRepository.save(paciente)).thenReturn(paciente);
-
-        Paciente result = pacienteService.save(paciente);
-
-        assertEquals(paciente, result);
+        pacienteService.save(paciente);
+        verify(pacienteRepository).save(paciente);
     }
 
 
     @Test
     public void deveSalvarPacienteComIdExistente() {
-
 
         Paciente paciente = new Paciente();
         paciente.setId(1L);
@@ -92,13 +100,8 @@ public class PacienteServiceImplTest {
 
     @Test
     public void deveDeletarUmPaciente() {
-        Paciente paciente = new Paciente();
-        paciente.setId(1L);
-        when(pacienteRepository.findById(1L)).thenReturn(Optional.of(paciente));
-
         pacienteService.delete(1L);
-
-        verify(pacienteRepository).delete(paciente);
+        verify(pacienteRepository).deleteById(1L);
     }
 
     @Test

@@ -16,8 +16,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class VeterinarioServiceImpl implements VeterinarioService {
 
-    @Autowired
-    private VeterinarioRepository veterinarioRepository;
+
+    private final VeterinarioRepository veterinarioRepository;
 
     @Override
     public List<Veterinario> findAll() {

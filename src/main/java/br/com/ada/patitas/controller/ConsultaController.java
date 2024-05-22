@@ -57,6 +57,7 @@ public class ConsultaController {
 
     }
 
+
     @PostMapping
     public ResponseEntity<Consulta> save(@Valid @RequestBody final ConsultaDto consultaDto) {
 

@@ -1,6 +1,7 @@
 package br.com.ada.patitas.serviceimpl;
 
 import static br.com.ada.patitas.DataConsulta.consulta;
+import static br.com.ada.patitas.DataConsulta.listaDeConsultas;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
@@ -11,42 +12,43 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import br.com.ada.patitas.model.HorariosDisponiveis;
-import br.com.ada.patitas.model.Paciente;
-import br.com.ada.patitas.model.Veterinario;
+import br.com.ada.patitas.model.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import br.com.ada.patitas.model.Consulta;
+
+import org.mockito.Mockito;
+
+
 import br.com.ada.patitas.repository.ConsultaRepository;
 
 public class ConsultaServiceImplTest {
 
-    @Mock
+
     private ConsultaRepository consultaRepository;
 
-    @InjectMocks
     private ConsultaServiceImpl consultaService;
 
     @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
+    public void preparar() {
+        consultaRepository = Mockito.mock(ConsultaRepository.class);
+        consultaService = new ConsultaServiceImpl(consultaRepository);
     }
 
     @Test
     public void testaListaDeConsultas() {
-        List<Consulta> consultas = new ArrayList<>();
+        List<Consulta> consultasEsperadas = listaDeConsultas();
 
-        when(consultaRepository.findAll()).thenReturn(consultas);
+        when(consultaRepository.findAll()).thenReturn(consultasEsperadas);
 
-        List<Consulta> consulta = consultaService.findAll();
+        List<Consulta> consultas = consultaService.findAll();
 
-        assertEquals(consultas, consulta);
+        assertEquals(consultasEsperadas, consultas);
     }
 
     public static Stream<Arguments> gerarConsultaOptional() {
@@ -57,68 +59,31 @@ public class ConsultaServiceImplTest {
         );
     }
 
-    @Test
-    public void testaConsultaPorId() {
-    
-        List<Consulta> consultas = new ArrayList<>();
-        when(consultaRepository.findAll()).thenReturn(consultas);
+    @ParameterizedTest
+    @MethodSource("gerarConsultaOptional")
+    void deveBusarConsultaPorId(Optional<Consulta> consultaEsperado) {
+        when(consultaRepository.findById(1L)).thenReturn(consultaEsperado);
 
- 
-        List<Consulta> result = consultaService.findAll();
+        Optional<Consulta> consultaOptional = consultaService.findById(1L);
 
-       
-        assertEquals(consultas, result);
+        assertEquals(consultaEsperado, consultaOptional);
+        verify(consultaRepository).findById(1L);
     }
+
 
 
     @Test
     public void testaCadastroDeConsulta() {
         Consulta consulta = new Consulta();
-        when(consultaRepository.save(consulta)).thenReturn(consulta);
-
-
-        Consulta consulta1 = consultaService.save(consulta);
-
-        assertEquals(consulta, consulta1);
+        consultaService.save(consulta);
+        verify(consultaRepository).save(consulta);
     }
-//Refazer esse teste
-//    @Test
-//    public void testaAtualizaçãoDeConsulta() {
-//        Veterinario veterinario = Veterinario.builder().id(consultaAtualizado.getVeterinario().getId()).build();
-//        Paciente paciente = Paciente.builder().id(consultaAtualizado.getPaciente().getId()).build();
-//        HorariosDisponiveis horariosDisponiveis = HorariosDisponiveis.builder().id(consultaAtualizado.getHorariosDisponiveis().getId()).build();
-//
-//        Consulta consulta = new Consulta();
-//        consulta.getId();
-//        consultaAtualizado.setVeterinario(veterinario);
-//        consultaAtualizado.setPaciente(paciente);
-//        consultaAtualizado.setHorariosDisponiveis(horariosDisponiveis);
-//        when(consultaRepository.findById(1L)).thenReturn(Optional.of(consulta));
-//        when(consultaRepository.save(consulta)).thenReturn(consulta);
-//
-//        Optional<Consulta> result = consultaService.update(1L, consultaAtualizado);
-//
-//        assertTrue(result.isPresent());
-//        assertEquals(consultaAtualizado.getVeterinario(), result.get().getVeterinario());
-//        assertEquals(consultaAtualizado.getPaciente(), result.get().getPaciente());
-//        assertEquals(consultaAtualizado.getHorariosDisponiveis(), result.get().getHorariosDisponiveis());
-//    }
+
 
     @Test
     public void testaDeletarConsulta() {
-        Consulta consulta = new Consulta();
-        consulta.setId(1L);
-        when(consultaRepository.findById(1L)).thenReturn(Optional.of(consulta));
-
         consultaService.delete(1L);
-
-        verify(consultaRepository).delete(consulta);
-
-        Optional<Consulta> result = consultaService.findById(1L);
-
-   
-        assertTrue(result.isPresent());
-        assertEquals(consulta, result.get());
+        verify(consultaRepository).deleteById(1L);
     }
 
 }

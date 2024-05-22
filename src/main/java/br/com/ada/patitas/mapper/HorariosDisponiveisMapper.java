@@ -10,15 +10,16 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class HorariosDisponiveisMapper {
-    public static List<HorariosDisponiveisDto>toDtoHorariosDisponiveis(final List<HorariosDisponiveis> horariosDisponiveis){
+    public static List<HorariosDisponiveisDto> toDtoHorariosDisponiveis(final List<HorariosDisponiveis> horariosDisponiveis) {
         return horariosDisponiveis.stream()
                 .map(entity -> toDtoHorariosDisponiveis(entity))
                 .collect(Collectors.toList());
     }
-    public static HorariosDisponiveisDto toDtoHorariosDisponiveis(final HorariosDisponiveis horariosDisponiveis){
-        if (Objects.nonNull(horariosDisponiveis)){
+
+    public static HorariosDisponiveisDto toDtoHorariosDisponiveis(final HorariosDisponiveis horariosDisponiveis) {
+        if (Objects.nonNull(horariosDisponiveis)) {
             return HorariosDisponiveisDto.builder()
-                    .idVeterinario(horariosDisponiveis.getIdVeterinario())
+                    .idVeterinario(horariosDisponiveis.getVeterinario().getId())
                     .horariosDisponiveis(horariosDisponiveis.getHorariosDisponiveis())
                     .status(horariosDisponiveis.isStatus())
                     .build();
@@ -26,9 +27,12 @@ public class HorariosDisponiveisMapper {
         }
         return HorariosDisponiveisDto.builder().build();
     }
-    public static HorariosDisponiveis toEntityHorariosDisponiveis(final HorariosDisponiveisDto horariosDisponiveisDto){
+
+    public static HorariosDisponiveis toEntityHorariosDisponiveis(final HorariosDisponiveisDto horariosDisponiveisDto) {
+        Veterinario veterinario = Veterinario.builder().id(horariosDisponiveisDto.getIdVeterinario()).build();
+
         return HorariosDisponiveis.builder()
-                .idVeterinario(horariosDisponiveisDto.getIdVeterinario())
+                .veterinario(veterinario)
                 .horariosDisponiveis(horariosDisponiveisDto.getHorariosDisponiveis())
                 .status(horariosDisponiveisDto.isStatus())
                 .build();

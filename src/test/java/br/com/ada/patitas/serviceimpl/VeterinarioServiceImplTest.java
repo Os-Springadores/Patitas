@@ -1,70 +1,81 @@
 package br.com.ada.patitas.serviceimpl;
 
+
+import static br.com.ada.patitas.DataVeterinario.listaVeterinario;
+import static br.com.ada.patitas.DataVeterinario.veterinario;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import br.com.ada.patitas.exception.VeterinarioJaExisteException;
 import br.com.ada.patitas.model.Veterinario;
 import br.com.ada.patitas.repository.VeterinarioRepository;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class VeterinarioServiceImplTest {
 
-    @Mock
+
     private VeterinarioRepository veterinarioRepository;
 
-    @InjectMocks
+
     private VeterinarioServiceImpl veterinarioService;
 
     @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
+    public void preparar() {
+        veterinarioRepository = mock(VeterinarioRepository.class);
+        veterinarioService = new VeterinarioServiceImpl(veterinarioRepository);
     }
 
     @Test
-    public void deveListarTodosPacientes() {
-        List<Veterinario> veterinarios = new ArrayList<>();
-        when(veterinarioRepository.findAll()).thenReturn(veterinarios);
+    public void deveListarVeterinarios() {
+        List<Veterinario> veterinarioResposta = listaVeterinario();
+        when(veterinarioRepository.findAll()).thenReturn(veterinarioResposta);
 
-        List<Veterinario> result = veterinarioService.findAll();
- 
-        assertEquals(veterinarios, result);
+        List<Veterinario> veterinarios = veterinarioService.findAll();
+
+        assertEquals(veterinarioResposta, veterinarios);
     }
 
-    @Test
-    public void deveProcurarVeterinarioPorId() {
-        Veterinario veterinario = new Veterinario();
-        veterinario.setId(1L);
-        when(veterinarioRepository.findById(1L)).thenReturn(Optional.of(veterinario));
+    public static Stream<Arguments> gerarVeterinarioOptional() {
+        return Stream.of(
+                arguments(Optional.of(veterinario())),
+                arguments(Optional.empty())
 
-        Optional<Veterinario> result = veterinarioService.findById(1L);
+        );
+    }
 
-        assertTrue(result.isPresent());
-        assertEquals(veterinario, result.get());
+    @ParameterizedTest
+    @MethodSource("gerarVeterinarioOptional")
+    void deveBuscarVeterinarioPorId(Optional<Veterinario> veterinarioEsperado) {
+        when(veterinarioRepository.findById(1L)).thenReturn(veterinarioEsperado);
+
+        Optional<Veterinario> veterinarioOptional = veterinarioService.findById(1L);
+
+        assertEquals(veterinarioEsperado, veterinarioOptional);
+        verify(veterinarioRepository).findById(1L);
     }
 
     @Test
     public void deveCadastrarUmVeterinario() {
         Veterinario veterinario = new Veterinario();
-        when(veterinarioRepository.findById(anyLong())).thenReturn(Optional.empty());
-        when(veterinarioRepository.save(veterinario)).thenReturn(veterinario);
-        Veterinario result = veterinarioService.save(veterinario);
-
-        assertEquals(veterinario, result);
+        veterinarioService.save(veterinario);
+        verify(veterinarioRepository).save(veterinario);
     }
 
     @Test
     public void deveSalvarVeterinarioComIdExistente() {
- Veterinario veterinario = new Veterinario();
+        Veterinario veterinario = new Veterinario();
         veterinario.setId(1L);
         when(veterinarioRepository.findById(1L)).thenReturn(Optional.of(veterinario));
 
@@ -76,7 +87,7 @@ public class VeterinarioServiceImplTest {
         Veterinario veterinario = new Veterinario();
         veterinario.getId();
         Veterinario veterinarioAtualizado = new Veterinario();
-        veterinarioAtualizado.setNome("Raelzin");
+        veterinarioAtualizado.setNome("Bernardo");
         when(veterinarioRepository.findById(1L)).thenReturn(Optional.of(veterinario));
         when(veterinarioRepository.save(veterinarioAtualizado)).thenReturn(veterinarioAtualizado);
 
@@ -88,13 +99,8 @@ public class VeterinarioServiceImplTest {
 
     @Test
     public void deveDeletarUmVeterinario() {
-        Veterinario veterinario = new Veterinario();
-        veterinario.setId(1L);
-        when(veterinarioRepository.findById(1L)).thenReturn(Optional.of(veterinario));
-
         veterinarioService.delete(1L);
-
-        verify(veterinarioRepository).delete(veterinario);
+        verify(veterinarioRepository).deleteById(1L);
     }
 
     @Test
@@ -104,43 +110,5 @@ public class VeterinarioServiceImplTest {
         assertThrows(VeterinarioJaExisteException.class, () -> veterinarioService.delete(1L));
     }
 
-    @Test
-    public void testUpdate() {
-     
-        Veterinario veterinario = new Veterinario();
-        veterinario.setId(1L);
-        Veterinario veterinarioAtualizado = new Veterinario();
-        veterinarioAtualizado.setNome("Novo Nome");
-        when(veterinarioRepository.findById(1L)).thenReturn(Optional.of(veterinario));
-        when(veterinarioRepository.save(veterinarioAtualizado)).thenReturn(veterinarioAtualizado);
 
- 
-        Optional<Veterinario> result = veterinarioService.update(1L, veterinarioAtualizado);
-
-      
-        assertTrue(result.isPresent());
-        assertEquals(veterinarioAtualizado.getNome(), result.get().getNome());
-    }
-
-    @Test
-    public void testDelete() {
-      
-        Veterinario veterinario = new Veterinario();
-        veterinario.setId(1L);
-        when(veterinarioRepository.findById(1L)).thenReturn(Optional.of(veterinario));
-
-   
-        veterinarioService.delete(1L);
-
-        verify(veterinarioRepository).delete(veterinario);
-    }
-
-    @Test
-    public void testDeleteNonexistentId() {
- 
-        when(veterinarioRepository.findById(1L)).thenReturn(Optional.empty());
-
-  
-        assertThrows(VeterinarioJaExisteException.class, () -> veterinarioService.delete(1L));
-    }
 }

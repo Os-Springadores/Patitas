@@ -1,15 +1,18 @@
 package br.com.ada.patitas.controller;
 
+import static br.com.ada.patitas.DataVeterinario.listaVeterinario;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.ada.patitas.DataVeterinario;
 import br.com.ada.patitas.dto.VeterinarioDto;
 import br.com.ada.patitas.model.Especialidade;
 import br.com.ada.patitas.model.Veterinario;
@@ -22,6 +25,7 @@ import org.mockito.InjectMocks;
 
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -29,7 +33,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-
+@AutoConfigureMockMvc
 @WebMvcTest(VeterinarioController.class)
 public class VeterinarioControllerTest {
 
@@ -45,14 +49,10 @@ public class VeterinarioControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
-    public void deveListarTodos() throws Exception {
-        List<Veterinario> veterinarios = Arrays.asList(new Veterinario(), new Veterinario());
+    public void deveListarTodosVeterinario() throws Exception {
+        List<Veterinario> veterinarios = DataVeterinario.listaVeterinario();
         when(veterinarioService.findAll()).thenReturn(veterinarios);
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/veterinario"))
@@ -66,56 +66,43 @@ public class VeterinarioControllerTest {
     @Test
     public void deveEncontrarVeterinarioPorId() throws Exception {
 
-        Veterinario veterinario = new Veterinario();
-        veterinario.getId();
+        Veterinario veterinario = DataVeterinario.veterinario();
+        String veterinarioJson = objectMapper.writeValueAsString(veterinario);
+
         when(veterinarioService.findById(1L)).thenReturn(Optional.of(veterinario));
-
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/veterinario/1"))
-                .andExpect(status().isOk()).andReturn();
-
-        Veterinario veterinarioResponse = objectMapper.readValue(result.getResponse().getContentAsString(),
-                Veterinario.class);
-        assertEquals(veterinario.getId(), veterinarioResponse);
+        mockMvc.perform(get("/veterinario/1"))
+                .andExpect(status().isOk());
     }
 
     @Test
     public void deveCadastrarUmVeterinario() throws Exception {
 
-        VeterinarioDto veterinarioDto = new VeterinarioDto();
-        veterinarioDto.getNome();
-        veterinarioDto.getEspecialidade();
+        Veterinario veterinario = DataVeterinario.veterinario();
+        String veterinarioJson = objectMapper.writeValueAsString(veterinario);
 
-        String requestBody = objectMapper.writeValueAsString(veterinarioDto);
-        mockMvc.perform(MockMvcRequestBuilders.post("/veterinario")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(requestBody))
+        mockMvc.perform(post("/veterinario")
+                .contentType("application/json")
+                .content(veterinarioJson))
                 .andExpect(status().isCreated());
-
+        verify(veterinarioService.save(any(Veterinario.class)));
     }
 
     @Test
 
     public void deveAtualizarUmVeterinario() throws Exception {
-
-       Veterinario veterinario =new Veterinario();
-        veterinario.setNome("Israel");
-        veterinario.setEspecialidade(Especialidade.CIRURGIA_GERAL);
-
-        String requestBody = objectMapper.writeValueAsString(veterinario);
-
-        when(veterinarioService.update(any(Long.class), any(Veterinario.class)))
-                .thenReturn(Optional.of(new Veterinario()));
-
+        Veterinario veterinario = DataVeterinario.veterinario();
+        String veterinarioJson = objectMapper.writeValueAsString(veterinario);
+        when(veterinarioService.update(any(Long.class), any(Veterinario.class))).thenReturn(Optional.of(new Veterinario()));
         mockMvc.perform(MockMvcRequestBuilders.put("/veterinario/1")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(requestBody))
+                .content(veterinarioJson))
                 .andExpect(status().isOk());
-        }
+    }
 
-        @Test
-        public void deveDeletarUmVeterinario () throws Exception {
+    @Test
+    public void deveDeletarUmVeterinario() throws Exception {
         mockMvc.perform(delete("/veterinario/1"))
-
-                        .andExpect(status().isNoContent());
-            }
-        }
+                .andExpect(status().isNoContent());
+        verify(veterinarioService).delete(1L);
+    }
+}
