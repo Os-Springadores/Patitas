@@ -48,3 +48,21 @@ public class HorariosDisponiveisController {
         return ResponseEntity.status(HttpStatus.CREATED).body(horariosDisponiveis);
     }
 }
+///////
+@PostMapping
+public ResponseEntity<HorariosDisponiveis> save(@Valid @RequestBody HorariosDisponiveisDto horariosDisponiveisDto) throws Exception {
+    if (horariosDisponiveisDto.getIdVeterinario() == null) {
+        return ResponseEntity.badRequest().body("ID do Veterinário deve ser informado");
+    }
+    
+    HorariosDisponiveis horario = horariosDisponiveisRepository.findById(horariosDisponiveisDto.getIdVeterinario()).orElse(null);
+    if (horario == null || !horario.isStatus()) {
+        return ResponseEntity.badRequest().build();
+    }
+
+    HorariosDisponiveis horariosDisponiveis = horariosDisponiveisService.save(toEntityHorariosDisponiveis(horariosDisponiveisDto));
+
+    horario.setStatus(false);
+    horariosDisponiveisRepository.save(horario);
+    return ResponseEntity.status(HttpStatus.CREATED).body(horariosDisponiveis);
+}
