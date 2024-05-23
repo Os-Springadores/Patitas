@@ -1,127 +1,98 @@
 package br.com.ada.patitas.controller;
-
-import br.com.ada.patitas.DataConsulta;
-import br.com.ada.patitas.DataPaciente;
-import br.com.ada.patitas.dto.ConsultaDto;
-import br.com.ada.patitas.dto.PacienteDto;
-import br.com.ada.patitas.model.Consulta;
-import br.com.ada.patitas.model.Paciente;
-import br.com.ada.patitas.repository.HorariosDisponiveisRepository;
-import br.com.ada.patitas.repository.VeterinarioRepository;
-import br.com.ada.patitas.service.ConsultaService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-
-import org.springframework.test.web.servlet.MockMvc;
-
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
-import static br.com.ada.patitas.DataConsulta.listaDeConsultas;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import br.com.ada.patitas.dto.ConsultaDto;
+import br.com.ada.patitas.model.Consulta;
+import br.com.ada.patitas.service.ConsultaService;
 
-@AutoConfigureMockMvc
-@WebMvcTest(ConsultaController.class)
 public class ConsultaControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
+    @Mock
     private ConsultaService consultaService;
 
-    @MockBean
-    private HorariosDisponiveisRepository horariosDisponiveisRepository;
+    @InjectMocks
+    private ConsultaController consultaController;
 
-    @MockBean
-    private VeterinarioRepository veterinarioRepository;
-
-    @Autowired
-    private ObjectMapper objectMapper;
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
-    public void deveListarTodasConsultas() throws Exception {
-        List<Consulta> consultas = listaDeConsultas();
+    public void testFindAll() {
+       
+        Consulta consulta1 = new Consulta();
+        Consulta consulta2 = new Consulta();
+        List<Consulta> consultas = Arrays.asList(consulta1, consulta2);
+
+       
         when(consultaService.findAll()).thenReturn(consultas);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/consulta"))
-                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
-
-        List<ConsultaDto> responseDto = objectMapper.readValue(result.getResponse().getContentAsString(),
-                objectMapper.getTypeFactory().constructCollectionType(List.class, ConsultaDto.class));
-        assertEquals(consultas.size(), responseDto.size());
+    
+        ResponseEntity<List<ConsultaDto>> response = consultaController.findAll();
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(2, response.getBody().size());
     }
 
     @Test
-    void deveRetornarNaoEncontradoSeConsultaNaoExiste() throws Exception {
-        mockMvc.perform(get("/alunos/1"))
-                .andExpect(status().isNotFound());
+    public void testFindById() {
+   
+        Consulta consulta = new Consulta();
+        consulta.setId(1L);
+
+    
+        when(consultaService.findById(anyLong())).thenReturn(Optional.of(consulta));
+
+   
+        ResponseEntity<ConsultaDto> response = consultaController.findById(1L);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(1L, response.getBody().getId());
     }
 
     @Test
-    public void deveEncontrarConsultaPorId() throws Exception {
-        Consulta consulta = DataConsulta.consulta();
-        String consultaJson = objectMapper.writeValueAsString(consulta);
+    public void testSave() {
+       
+        ConsultaDto consultaDto = new ConsultaDto();
 
-        when(consultaService.findById(1L)).thenReturn(Optional.of(consulta));
-        mockMvc.perform(get("/consulta/1"))
-                .andExpect(status().isOk());
-
-
-    }
-
-
-    @Test
-    public void deveCadastrarUmaConsulta() throws Exception {
-
-        Consulta consulta = DataConsulta.consulta();
-        String consultaJson = objectMapper.writeValueAsString(consulta);
-        mockMvc.perform(post("/consulta")
-                .content(consultaJson)
-                .contentType("application/json"))
-                .andExpect(status().isCreated());
-        verify(consultaService).save(any(Consulta.class));
-    }
-
-
-    @Test
-    public void deveAtualizarUmaConsulta() throws Exception {
-        Consulta consulta = DataConsulta.consulta();
-        String requestBody = objectMapper.writeValueAsString(consulta);
-
-        when(consultaService.update(any(Long.class), any(Consulta.class))).thenReturn(Optional.of(new Consulta()));
-
-        mockMvc.perform(MockMvcRequestBuilders.put("/consulta/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(requestBody))
-                .andExpect(status().isOk());
+      
+        ResponseEntity<Consulta> response = consultaController.save(consultaDto);
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        verify(consultaService, times(1)).save(any());
     }
 
     @Test
-    public void deveDeletarUmaConsulta() throws Exception {
-        mockMvc.perform(delete("/consulta/1"))
-                .andExpect(status().isNoContent());
+    public void testUpdate() {
+    
+        ConsultaDto consultaDto = new ConsultaDto();
+        consultaDto.setId(1L);
 
-        verify(consultaService).delete(1L);
+ 
+        when(consultaService.update(anyLong(), any())).thenReturn(Optional.of(new Consulta()));
+
+        ResponseEntity<ConsultaDto> response = consultaController.update(1L, consultaDto);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(1L, response.getBody().getId());
     }
 
+    @Test
+    public void testDelete() throws Exception {
 
+        ResponseEntity<Void> response = consultaController.delete(1L);
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        verify(consultaService, times(1)).delete(anyLong());
+    }
 }

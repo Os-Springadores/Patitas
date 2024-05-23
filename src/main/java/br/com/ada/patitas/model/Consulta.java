@@ -6,7 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -21,15 +26,18 @@ public class Consulta {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "veterinario_id")
+    @JoinColumn(name="veterinario_id")
+
     private Veterinario veterinario;
 
     @ManyToOne
-    @JoinColumn(name = "paciente_id")
+    @JoinColumn(name="paciente_id")
+
     private Paciente paciente;
 
     @ManyToOne
-    @JoinColumn(name = "horarios_disponiveis_id")
+    @JoinColumn(name="horarios_disponiveis_id")
+
     private HorariosDisponiveis horariosDisponiveis;
 
     @Enumerated(EnumType.STRING)
@@ -41,7 +49,6 @@ public class Consulta {
 
     @Column(name = "preco")
     private Double preco;
-
     @Column(name = "status")
     private boolean status;
 

@@ -1,6 +1,8 @@
 package br.com.ada.patitas.service;
 
 import br.com.ada.patitas.model.Consulta;
+import br.com.ada.patitas.model.Paciente;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 import java.util.List;
@@ -15,7 +17,7 @@ public interface ConsultaService {
 
     Consulta save(final Consulta consulta);
 
-    Optional<Consulta>update(final Long id,final Consulta consulta);
+    Optional<Consulta> update(final Long id, final Consulta consultaAtualizado);
 
     void delete(final Long id);
 

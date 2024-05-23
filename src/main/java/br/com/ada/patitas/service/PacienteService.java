@@ -15,7 +15,7 @@ public interface PacienteService {
 
     Paciente save(final Paciente paciente) throws Exception;
 
-    Optional<Paciente> update(final Long id, final Paciente pacienteAtualizado);
+    Optional<Paciente> update(final Long id, final Paciente paciente);
 
     void delete(final Long id) throws Exception;
 

@@ -16,8 +16,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class VeterinarioServiceImpl implements VeterinarioService {
 
-
-    private final VeterinarioRepository veterinarioRepository;
+    @Autowired
+    private VeterinarioRepository veterinarioRepository;
 
     @Override
     public List<Veterinario> findAll() {
@@ -36,6 +36,7 @@ public class VeterinarioServiceImpl implements VeterinarioService {
         }
         throw new VeterinarioJaExisteException("O veterinario com id " + veterinario.getId() + "já existe");
     }
+
 
     @Override
     public Optional<Veterinario> update(final Long id, final Veterinario veterinarioAtualizado) {
