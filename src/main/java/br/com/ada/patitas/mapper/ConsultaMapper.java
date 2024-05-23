@@ -1,10 +1,7 @@
 package br.com.ada.patitas.mapper;
 
 import br.com.ada.patitas.dto.ConsultaDto;
-import br.com.ada.patitas.model.Consulta;
-import br.com.ada.patitas.model.HorariosDisponiveis;
-import br.com.ada.patitas.model.Paciente;
-import br.com.ada.patitas.model.Veterinario;
+import br.com.ada.patitas.model.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -38,14 +35,16 @@ public class ConsultaMapper {
         Veterinario veterinario = Veterinario.builder().id(consultaDto.getIdVeterinario()).build();
         Paciente paciente = Paciente.builder().id(consultaDto.getIdPaciente()).build();
         HorariosDisponiveis horariosDisponiveis = HorariosDisponiveis.builder().id(consultaDto.getIdHorariosDisponiveis()).build();
+        String tipoServico = consultaDto.getTipoServico();
         return Consulta.builder()
                 .veterinario(veterinario)
                 .paciente(paciente)
                 .horariosDisponiveis(horariosDisponiveis)
                 .servico(consultaDto.getServico())
-                .tipoServico(consultaDto.getTipoServico())
+                .tipoServico(tipoServico)
                 .preco(consultaDto.getPreco())
                 .status(consultaDto.isStatus())
                 .build();
     }
+
 }

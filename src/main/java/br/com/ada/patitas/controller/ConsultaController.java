@@ -4,6 +4,7 @@ package br.com.ada.patitas.controller;
 import br.com.ada.patitas.dto.ConsultaDto;
 
 import br.com.ada.patitas.model.Consulta;
+import br.com.ada.patitas.model.Especialidade;
 import br.com.ada.patitas.model.HorariosDisponiveis;
 
 import br.com.ada.patitas.model.Veterinario;
@@ -70,6 +71,7 @@ public class ConsultaController {
         if (horario == null || !horario.isStatus()) {
             return ResponseEntity.badRequest().build();
         }
+
         Consulta consultaDisponivel = consultaService.save(toEntityConsulta(consultaDto));
         horario.setStatus(false);
         horariosDisponiveisRepository.save(horario);

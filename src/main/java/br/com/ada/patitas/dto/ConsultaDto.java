@@ -1,5 +1,6 @@
 package br.com.ada.patitas.dto;
 
+import br.com.ada.patitas.model.Especialidade;
 import br.com.ada.patitas.model.Servico;
 
 import lombok.AllArgsConstructor;

@@ -7,7 +7,6 @@ public enum Especialidade {
     EMERGENCIA(Servico.ATENDIMENTO_EMERGENCIAL),
     CIRURGIA_GERAL(Servico.CIRURGIA),
     CARDIOLOGIA(Servico.ESPECIALIDADES),
-    CIRURGIA(Servico.ESPECIALIDADES),
     DERMATOLOGIA(Servico.ESPECIALIDADES),
     NEUROLOGIA(Servico.ESPECIALIDADES),
     ONCOLOGIA(Servico.ESPECIALIDADES);
@@ -15,6 +14,7 @@ public enum Especialidade {
     private Servico[] servicos;
 
     Especialidade(Servico... servicos) {
+
         this.servicos = servicos;
     }
 
@@ -24,5 +24,14 @@ public enum Especialidade {
                 return true;
         }
         return false;
+    }
+
+    public static Especialidade fromString(String especialidade) {
+        for (Especialidade e : values()) {
+            if (e.name().equalsIgnoreCase(especialidade)) {
+                return e;
+            }
+        }
+        throw new IllegalArgumentException("Especialidade inválida: " + especialidade);
     }
 }

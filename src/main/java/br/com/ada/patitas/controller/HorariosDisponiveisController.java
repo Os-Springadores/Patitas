@@ -30,26 +30,23 @@ public class HorariosDisponiveisController {
     private HorariosDisponiveisService horariosDisponiveisService;
     @Autowired
     private VeterinarioRepository veterinarioRepository;
+
     @GetMapping
-    public ResponseEntity<List<HorariosDisponiveisDto>> findAll(){
+    public ResponseEntity<List<HorariosDisponiveisDto>> findAll() {
         List<HorariosDisponiveis> horariosDisponiveis = horariosDisponiveisService.findAll();
         return ResponseEntity.ok(toDtoHorariosDisponiveis(horariosDisponiveis));
     }
 
     @PostMapping
-    public ResponseEntity<HorariosDisponiveis>save(@Valid @RequestBody HorariosDisponiveisDto horariosDisponiveisDto)throws Exception{
+    public ResponseEntity<HorariosDisponiveis> save(@Valid @RequestBody HorariosDisponiveisDto horariosDisponiveisDto) throws Exception {
 
-        Optional<Veterinario> veterinarioOptional=veterinarioRepository.findById(horariosDisponiveisDto.getIdVeterinario());
-        if(veterinarioOptional.isEmpty()){
+        Optional<Veterinario> veterinarioOptional = veterinarioRepository.findById(horariosDisponiveisDto.getIdVeterinario());
+        if (veterinarioOptional.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
         horariosDisponiveisService.save(toEntityHorariosDisponiveis(horariosDisponiveisDto));
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-<<<<<<< HEAD
-}
-=======
 }
 
->>>>>>> b0a4f3e821bca46c0084a58b86d4698a8626ff72
