@@ -25,7 +25,7 @@ public class HorariosDisponiveisMapper {
                     .build();
 
         }
-        return HorariosDisponiveisDto.builder().build();
+        return null;
     }
 
     public static HorariosDisponiveis toEntityHorariosDisponiveis(final HorariosDisponiveisDto horariosDisponiveisDto) {
