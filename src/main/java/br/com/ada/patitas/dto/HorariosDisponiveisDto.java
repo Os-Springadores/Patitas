@@ -1,6 +1,5 @@
 package br.com.ada.patitas.dto;
 
-import br.com.ada.patitas.model.Veterinario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +15,6 @@ public class HorariosDisponiveisDto {
 
 
     private Long idVeterinario;
-
 
     private LocalDateTime horariosDisponiveis;
 

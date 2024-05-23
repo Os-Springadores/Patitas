@@ -56,7 +56,7 @@ public class VeterinarioController {
         final Optional<Veterinario> veterinarioOptional = veterinarioService.update(id, toEntityVeterinario(veterinarioAtualizado));
         if (veterinarioOptional.isEmpty())
             return ResponseEntity.notFound().build();
-            return ResponseEntity.ok(veterinarioAtualizado);
+        return ResponseEntity.ok(veterinarioAtualizado);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) throws Exception {

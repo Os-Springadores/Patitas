@@ -36,8 +36,8 @@ public class ConsultaMapper {
 
     public static Consulta toEntityConsulta(final ConsultaDto consultaDto) {
         Veterinario veterinario = Veterinario.builder().id(consultaDto.getIdVeterinario()).build();
-        Paciente paciente=Paciente.builder().id(consultaDto.getIdPaciente()).build();
-        HorariosDisponiveis horariosDisponiveis=HorariosDisponiveis.builder().id(consultaDto.getIdHorariosDisponiveis()).build();
+        Paciente paciente = Paciente.builder().id(consultaDto.getIdPaciente()).build();
+        HorariosDisponiveis horariosDisponiveis = HorariosDisponiveis.builder().id(consultaDto.getIdHorariosDisponiveis()).build();
         return Consulta.builder()
                 .veterinario(veterinario)
                 .paciente(paciente)

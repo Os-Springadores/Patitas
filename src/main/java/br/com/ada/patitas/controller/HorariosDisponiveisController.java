@@ -3,8 +3,7 @@ package br.com.ada.patitas.controller;
 
 import br.com.ada.patitas.dto.HorariosDisponiveisDto;
 import br.com.ada.patitas.model.HorariosDisponiveis;
-import br.com.ada.patitas.model.Veterinario;
-import br.com.ada.patitas.repository.VeterinarioRepository;
+import br.com.ada.patitas.repository.HorariosDisponiveisRepository;
 import br.com.ada.patitas.service.HorariosDisponiveisService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 import static br.com.ada.patitas.mapper.HorariosDisponiveisMapper.toDtoHorariosDisponiveis;
 import static br.com.ada.patitas.mapper.HorariosDisponiveisMapper.toEntityHorariosDisponiveis;
@@ -28,23 +26,26 @@ public class HorariosDisponiveisController {
 
     @Autowired
     private HorariosDisponiveisService horariosDisponiveisService;
-    @Autowired
-    private VeterinarioRepository veterinarioRepository;
+    private final HorariosDisponiveisRepository horariosDisponiveisRepository;
+
+
     @GetMapping
-    public ResponseEntity<List<HorariosDisponiveisDto>> findAll(){
+    public ResponseEntity<List<HorariosDisponiveisDto>> findAll() {
         List<HorariosDisponiveis> horariosDisponiveis = horariosDisponiveisService.findAll();
-       return ResponseEntity.ok(toDtoHorariosDisponiveis(horariosDisponiveis));
+        return ResponseEntity.ok(toDtoHorariosDisponiveis(horariosDisponiveis));
     }
 
     @PostMapping
-    public ResponseEntity<HorariosDisponiveis>save(@Valid @RequestBody HorariosDisponiveisDto horariosDisponiveisDto)throws Exception{
-
-        Optional<Veterinario> veterinarioOptional=veterinarioRepository.findById(horariosDisponiveisDto.getIdVeterinario());
-        if(veterinarioOptional.isEmpty()){
+    public ResponseEntity<HorariosDisponiveis> save(@Valid @RequestBody HorariosDisponiveisDto horariosDisponiveisDto) throws Exception {
+        HorariosDisponiveis horario = horariosDisponiveisRepository.findById(horariosDisponiveisDto.getIdVeterinario()).orElse(null);
+        if (horario == null || !horario.isStatus()) {
             return ResponseEntity.badRequest().build();
         }
-        horariosDisponiveisService.save(toEntityHorariosDisponiveis(horariosDisponiveisDto));
+        HorariosDisponiveis horariosDisponiveis = horariosDisponiveisService.save(toEntityHorariosDisponiveis(horariosDisponiveisDto));
 
-       return ResponseEntity.status(HttpStatus.CREATED).build();
+        horario.setStatus(false);
+        horariosDisponiveisRepository.save(horario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(horariosDisponiveis);
     }
 }
+

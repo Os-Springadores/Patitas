@@ -37,6 +37,7 @@ public class VeterinarioServiceImpl implements VeterinarioService {
         throw new VeterinarioJaExisteException("O veterinario com id " + veterinario.getId() + "já existe");
     }
 
+
     @Override
     public Optional<Veterinario> update(final Long id, final Veterinario veterinarioAtualizado) {
         final Optional<Veterinario> veterinarioExistente = veterinarioRepository.findById(id);

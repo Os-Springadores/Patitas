@@ -14,13 +14,14 @@ public enum Especialidade {
 
     private Servico[] servicos;
 
-    Especialidade(Servico...servicos){
-        this.servicos=servicos;
+    Especialidade(Servico... servicos) {
+        this.servicos = servicos;
     }
-     public boolean contem(Servico servico){
-        for (Servico s:servicos) {
-            if(s.equals(servico))
-            return true;
+
+    public boolean contem(Servico servico) {
+        for (Servico s : servicos) {
+            if (s.equals(servico))
+                return true;
         }
         return false;
     }
