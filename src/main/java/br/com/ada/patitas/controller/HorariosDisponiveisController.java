@@ -47,4 +47,9 @@ public class HorariosDisponiveisController {
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> b0a4f3e821bca46c0084a58b86d4698a8626ff72
