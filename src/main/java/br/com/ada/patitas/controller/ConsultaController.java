@@ -77,19 +77,29 @@ public class ConsultaController {
         horariosDisponiveisRepository.save(horario);
         return ResponseEntity.status(HttpStatus.CREATED).body(consultaDisponivel);
     }
-
     @PutMapping("/{id}")
     public ResponseEntity<ConsultaDto> update(@PathVariable("id") final Long id, @Valid @RequestBody final ConsultaDto consultaAtualizado) {
-        final Optional<Consulta> optionalConsulta = consultaService.update(id, toEntityConsulta(consultaAtualizado));
-        if (optionalConsulta.isEmpty())
+
+        if (consultaAtualizado == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        final Optional<Consulta> optionalConsulta = consultaService.findById(id);
+        if (optionalConsulta.isEmpty()){
             return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(consultaAtualizado);
-    }
+        }
 
+        Consulta consulta = optionalConsulta.get();
+        consulta.setStatus(consultaAtualizado.isStatus());
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id) throws Exception {
-        consultaService.delete(id);
-        return ResponseEntity.noContent().build();
+        final Optional<Consulta> optionalConsultaAtualizada = consultaService.update(id, consulta);
+        if (optionalConsultaAtualizada.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        Consulta consultaAtualizada = optionalConsultaAtualizada.get();
+        ConsultaDto consultaDtoAtualizado = toDtoConsultaDto(consultaAtualizada);
+
+        return ResponseEntity.ok(consultaDtoAtualizado);
     }
 }
