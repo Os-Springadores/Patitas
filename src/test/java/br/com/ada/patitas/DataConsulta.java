@@ -7,7 +7,7 @@ import java.util.List;
 
 public class DataConsulta {
     private static Veterinario veterinario = new Veterinario(1L, "Israel", Especialidade.CIRURGIA_GERAL);
-    private static Paciente paciente = new Paciente(1L, "pedrita", Especie.MAMIFERO, "pituca", 5, 3.3);
+    private static Paciente paciente = new Paciente(1L, "pedrita", Especie.CACHORRO, "pituca", 5, 3.3);
     private static HorariosDisponiveis horariosDisponiveis = new HorariosDisponiveis(1L, veterinario, LocalDateTime.of(2024, 05, 20, 15, 5), true);
 
     public static List<Consulta> listaDeConsultas() {

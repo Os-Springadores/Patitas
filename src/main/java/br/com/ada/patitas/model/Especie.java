@@ -4,7 +4,7 @@ package br.com.ada.patitas.model;
 public enum Especie {
     AVE,
     PEIXE,
-    ANFIBIO,
-    MAMIFERO,
+    CACHORRO,
+    GATO,
     REPTIL
 }
